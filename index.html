@@ -8,10 +8,17 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AquoraX">
-<link rel="manifest" href="/AquoraXaquariumapp/manifest.webmanifest?v=cloud-reminders-fixed-20260507f">
+<!-- UX Lab: manifest disabled so PWA/service-worker caching cannot interfere during design testing -->
 <link rel="apple-touch-icon" href="assets/icon-192.png">
+<style>
+/* UX Lab safety: never show the production cloud gate in this sandbox. */
+.aqxUxLabMode #aqxLoginScreen,
+.aqxUxLabMode .aqxLoginScreen{display:none!important;}
+.aqxUxLabMode #welcomeScreen{display:none!important;}
+</style>
 
-<!-- AQUORAX ALL-IN-ONE VERIFIED: cloud-login saving-overlay pro-dosing-consumption-icp -->
+
+<!-- AQUORAX UX LAB: cloud/login/PWA disabled for fast safe UI experimentation -->
 
 <link rel="stylesheet" href="css/styles.css?v=coral-essentials-wow-20260509a">
 
@@ -20,7 +27,7 @@
 
 </head>
 
-<body>
+<body class="aqxLoggedIn aqxUxLabMode">
 
 <!-- AquoraX Account / Cloud Login -->
 <div id="aqxLoginScreen" class="aqxLoginScreen show">
@@ -1498,11 +1505,12 @@
 
 
 <!-- Firebase SDK for AquoraX Cloud -->
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-messaging-compat.js"></script>
-<script src="js/app.js?v=coral-essentials-wow-20260509a"></script>
+<!-- UX Lab: Firebase SDK disabled -->
+<!-- UX Lab: Firebase SDK disabled -->
+<!-- UX Lab: Firebase SDK disabled -->
+<!-- UX Lab: Firebase SDK disabled -->
+<script src="js/app.js?v=ux-lab-safe-20260511a"></script>
+<script src="js/ux-lab-mode.js?v=ux-lab-safe-20260511a"></script>
 
 <div id="cycleCompleteOverlay" class="cycleCompleteOverlay">
   <div class="cycleCompleteModal">
