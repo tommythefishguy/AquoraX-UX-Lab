@@ -18,3 +18,12 @@
 .video-panel{margin-top:18px;border:1px solid #24435f;background:linear-gradient(145deg,rgba(67,230,255,.07),rgba(154,77,255,.08));border-radius:24px;padding:22px;display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:stretch}.video-copy h3{font-size:27px;margin:0 0 10px}.video-copy p{margin:0;color:#c8d6e7;line-height:1.5}.video-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.video-card{border:1px solid #27435f;border-radius:20px;padding:16px;text-decoration:none;color:var(--text);background:rgba(255,255,255,.055);min-height:142px;display:flex;flex-direction:column;justify-content:space-between;transition:.18s ease}.video-card:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 0 28px rgba(67,230,255,.14)}.video-card.cyan{background:linear-gradient(150deg,rgba(67,230,255,.13),rgba(255,255,255,.045))}.video-card.purple{background:linear-gradient(150deg,rgba(154,77,255,.16),rgba(255,255,255,.045))}.video-card .play{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cyan),var(--purple));color:#020812;font-weight:950;margin-bottom:14px}.video-card strong{display:block;font-size:16px;line-height:1.15}.video-card small{display:block;color:#b7c7d9;line-height:1.35;margin-top:8px}.support-link{display:inline-flex;margin-top:12px;color:#8ff5ff;text-decoration:none;font-weight:900;font-size:14px}.support-link:hover{text-decoration:underline}.support-card .next-dose{margin-top:10px}
 @media(max-width:900px){.video-panel{grid-template-columns:1fr}.video-grid{grid-template-columns:1fr 1fr}.video-card{min-height:132px}}
 @media(max-width:520px){.video-grid{grid-template-columns:1fr}.video-panel{padding:18px}.video-card{min-height:118px}}
+
+/* Calculator now sits as the guided step between the hero and reef foundation. */
+.calculator-zone{padding:26px;margin-bottom:22px;background:linear-gradient(145deg,rgba(6,28,42,.94),rgba(16,10,38,.9));}
+.calculator-zone .dose-panel{margin-top:0;margin-bottom:16px;}
+.calculator-zone .support-row{margin-top:0;margin-bottom:16px;}
+.calculator-zone .video-panel{margin-top:0;}
+.calculator-zone .support-card,.calculator-zone .video-card,.calculator-zone .dose-card{backdrop-filter:blur(10px)}
+@media(max-width:900px){.calculator-zone{padding:20px}.calculator-zone .dose-panel{padding:18px}}
+@media(max-width:520px){.calculator-zone{padding:14px;border-radius:24px}}

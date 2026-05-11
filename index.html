@@ -34,6 +34,81 @@
       </div>
     </section>
 
+    <section class="calculator-zone panel" aria-label="Blue Shark dosing calculator and guides">
+      <section class="dose-panel" aria-labelledby="doseTitle">
+      <div class="dose-copy">
+        <p class="eyebrow">Blue Shark Dose Calculator</p>
+        <h3 id="doseTitle">Calculate by tank size</h3>
+        <p>Enter your tank volume to calculate Blue Shark support, then use the guide links before logging products. Paradigm is set to a 2-week rhythm in this UX Lab flow.</p>
+      </div>
+      <div class="dose-controls">
+        <label>Tank size<input id="tankVolume" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 200" /></label>
+        <select id="tankUnit" aria-label="Tank volume unit">
+          <option value="litres">Litres</option>
+          <option value="gallons">US gallons</option>
+        </select>
+      </div>
+      <div class="dose-results">
+        <article class="dose-card cyan">
+          <p class="label">Rapid Cycle / Colony</p>
+          <strong id="colonyDose">Add tank size</strong>
+          <small>One-time foundation dose.</small>
+        </article>
+        <article class="dose-card purple">
+          <p class="label">Paradigm</p>
+          <strong id="paradigmDose">Add tank size</strong>
+          <small>Every 2 weeks in this UX Lab flow.</small>
+        </article>
+      </div>
+    </section>
+
+    <div class="support-row compact-support">
+      <article class="support-card cyan" id="colonyCard">
+        <p class="label">Rapid Cycle / Colony</p>
+        <strong id="colonyStatus">Not logged</strong>
+        <button class="btn primary wide" id="colonyBtn" type="button">Confirm Rapid Cycle added</button>
+        <a class="support-link" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Watch Colony / Rapid Cycle guide ↗</a>
+      </article>
+      <article class="support-card purple">
+        <p class="label">Paradigm · 2 week rhythm</p>
+        <strong id="paradigmStatus">Not logged</strong>
+        <button class="btn purple wide" id="paradigmBtn" type="button">Log Paradigm dose</button>
+        <a class="support-link" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Watch Paradigm / ATM playlist ↗</a>
+        <small id="paradigmNext" class="next-dose"></small>
+      </article>
+    </div>
+
+    <section class="video-panel" aria-labelledby="blueSharkVideosTitle">
+      <div class="video-copy">
+        <p class="eyebrow">Blue Shark Guides</p>
+        <h3 id="blueSharkVideosTitle">Product guides built in</h3>
+        <p>Rapid Cycle, Paradigm and Blue Shark video links are kept beside the calculator so beginners learn before they add anything.</p>
+      </div>
+      <div class="video-grid">
+        <a class="video-card cyan" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">
+          <span class="play">▶</span>
+          <strong>Colony / Rapid Cycle</strong>
+          <small>How the foundation bacteria support begins.</small>
+        </a>
+        <a class="video-card cyan" href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener">
+          <span class="play">▶</span>
+          <strong>Rapid Cycle Overview</strong>
+          <small>Understand the first step before logging Colony.</small>
+        </a>
+        <a class="video-card purple" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">
+          <span class="play">▶</span>
+          <strong>ATM Product Playlist</strong>
+          <small>Product support videos in one place.</small>
+        </a>
+        <a class="video-card purple" href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">
+          <span class="play">▶</span>
+          <strong>Blue Shark Channel</strong>
+          <small>Open the full Blue Shark Journey video library.</small>
+        </a>
+      </div>
+    </section>
+    </section>
+
     <section class="command panel" aria-labelledby="cycleTitle">
       <div class="command-head">
         <div>
@@ -75,78 +150,6 @@
         </form>
       </div>
 
-      <section class="dose-panel" aria-labelledby="doseTitle">
-        <div class="dose-copy">
-          <p class="eyebrow">Blue Shark Dose Calculator</p>
-          <h3 id="doseTitle">Calculate by tank size</h3>
-          <p>Enter your tank volume and AquoraX will calculate the Rapid Cycle and Paradigm support amounts. Always check the bottle label before adding anything to the reef.</p>
-        </div>
-        <div class="dose-controls">
-          <label>Tank size<input id="tankVolume" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 200" /></label>
-          <select id="tankUnit" aria-label="Tank volume unit">
-            <option value="litres">Litres</option>
-            <option value="gallons">US gallons</option>
-          </select>
-        </div>
-        <div class="dose-results">
-          <article class="dose-card cyan">
-            <p class="label">Rapid Cycle / Colony</p>
-            <strong id="colonyDose">Add tank size</strong>
-            <small>One-time foundation dose.</small>
-          </article>
-          <article class="dose-card purple">
-            <p class="label">Paradigm</p>
-            <strong id="paradigmDose">Add tank size</strong>
-            <small>Every 2 weeks in this UX Lab flow.</small>
-          </article>
-        </div>
-      </section>
-
-      <div class="support-row">
-        <article class="support-card cyan" id="colonyCard">
-          <p class="label">Rapid Cycle / Colony</p>
-          <strong id="colonyStatus">Not logged</strong>
-          <button class="btn primary wide" id="colonyBtn" type="button">Confirm Rapid Cycle added</button>
-          <a class="support-link" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Watch Colony / Rapid Cycle guide ↗</a>
-        </article>
-        <article class="support-card purple">
-          <p class="label">Paradigm · 2 week rhythm</p>
-          <strong id="paradigmStatus">Not logged</strong>
-          <button class="btn purple wide" id="paradigmBtn" type="button">Log Paradigm dose</button>
-          <a class="support-link" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Watch Paradigm / ATM playlist ↗</a>
-          <small id="paradigmNext" class="next-dose"></small>
-        </article>
-      </div>
-
-      <section class="video-panel" aria-labelledby="blueSharkVideosTitle">
-        <div class="video-copy">
-          <p class="eyebrow">Blue Shark Guides</p>
-          <h3 id="blueSharkVideosTitle">Watch the product guides</h3>
-          <p>Official Blue Shark videos linked directly from the cycle flow, so beginners can learn before adding products.</p>
-        </div>
-        <div class="video-grid">
-          <a class="video-card cyan" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">
-            <span class="play">▶</span>
-            <strong>Colony / Rapid Cycle</strong>
-            <small>How the foundation bacteria support begins.</small>
-          </a>
-          <a class="video-card cyan" href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener">
-            <span class="play">▶</span>
-            <strong>Rapid Cycle Overview</strong>
-            <small>Understand the first step before logging Colony.</small>
-          </a>
-          <a class="video-card purple" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">
-            <span class="play">▶</span>
-            <strong>ATM Product Playlist</strong>
-            <small>Product support videos in one place.</small>
-          </a>
-          <a class="video-card purple" href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">
-            <span class="play">▶</span>
-            <strong>Blue Shark Channel</strong>
-            <small>Open the full Blue Shark Journey video library.</small>
-          </a>
-        </div>
-      </section>
     </section>
 
     <section class="guidance panel">
