@@ -1,11 +1,12 @@
-const STORE_KEY = 'aquoraxHomeOnlyV2Dose';
+const STORE_KEY = 'aquoraxHomeOnlyV3CycleComplete';
 const $ = (id) => document.getElementById(id);
 
 const stages = {
   1: { name: 'Foundation', progress: 25, desc: 'Begin logging tests so AquoraX can follow the cycle trend.' },
   2: { name: 'Ammonia Watch', progress: 50, desc: 'Ammonia activity suggests the cycle is beginning to move.' },
   3: { name: 'Nitrite Watch', progress: 75, desc: 'Nitrite activity suggests the biological filter is developing.' },
-  4: { name: 'Stability', progress: 100, desc: 'Lower ammonia and nitrite with nitrate present suggests the reef is moving toward stability.' }
+  4: { name: 'Stability Watch', progress: 80, desc: 'Ammonia and nitrite are calming down while AquoraX watches for nitrate.' },
+  5: { name: 'Cycle Complete', progress: 100, desc: 'Nitrate is present. Your foundation cycle is complete and the next reefing journey has begun.' }
 };
 
 let state = loadState();
@@ -13,10 +14,10 @@ let state = loadState();
 function loadState(){
   try{
     const saved = JSON.parse(localStorage.getItem(STORE_KEY));
-    return saved && typeof saved === 'object' ? { tests: [], colony: null, paradigm: null, tankVolume: '', tankUnit: 'litres', ...saved } : defaultState();
+    return saved && typeof saved === 'object' ? { tests: [], colony: null, paradigm: null, tankVolume: '', tankUnit: 'litres', cycleCompletePopupSeen: false, ...saved } : defaultState();
   } catch { return defaultState(); }
 }
-function defaultState(){ return { tests: [], colony: null, paradigm: null, tankVolume: '', tankUnit: 'litres' }; }
+function defaultState(){ return { tests: [], colony: null, paradigm: null, tankVolume: '', tankUnit: 'litres', cycleCompletePopupSeen: false }; }
 function saveState(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
 function num(v){
   if(v === '' || v === null || v === undefined) return null;
@@ -25,10 +26,19 @@ function num(v){
 }
 function fmt(n, dp=2){ return n === null || n === undefined ? '—' : Number(n).toFixed(dp).replace(/\.00$/, ''); }
 function latest(){ return state.tests[0] || null; }
+function nitratePresent(test){
+  return test && typeof test.nitrate === 'number' && test.nitrate > 0;
+}
+function shouldCelebrateCycleComplete(previousLatest, newTest){
+  // Show the celebration when a saved test proves nitrate is present for the first time.
+  // This also protects against older builds where Stage 5 may have appeared without the modal.
+  return nitratePresent(newTest) && !state.cycleCompletePopupSeen;
+}
 function detectStage(test){
   if(!test) return 1;
   const a = test.ammonia ?? 0, ni = test.nitrite ?? 0, na = test.nitrate ?? 0;
-  if(a <= 0.05 && ni <= 0.05 && na > 0) return 4;
+  if(nitratePresent(test)) return 5;
+  if(a <= 0.05 && ni <= 0.05) return 4;
   if(ni > 0.05) return 3;
   if(a > 0.05) return 2;
   return 1;
@@ -41,9 +51,10 @@ function guidance(stage, test){
   else items.push('Ammonia is low. Keep watching the pattern across the next tests.');
   if(ni > 0.05) items.push('Nitrite is showing. This usually means the biological filter is developing, but stability is still building.');
   else items.push('Nitrite is low. AquoraX will keep checking this alongside ammonia and nitrate.');
-  if(na > 0) items.push('Nitrate is beginning to show. This can be a sign the cycle is moving forward.');
+  if(na > 0) items.push('Nitrate is present. AquoraX marks the foundation cycle as complete and moves the reef into the next journey stage.');
   else items.push('Nitrate has not been detected yet. Keep logging tests so the trend becomes clearer.');
-  if(stage === 4) items.push('Ammonia and nitrite are low with nitrate present. This suggests the system is moving toward stability.');
+  if(stage === 5) items.push('Congratulations — your cycle is complete. Keep moving slowly, keep testing, and let the reef mature with patience.');
+  if(stage === 4) items.push('Ammonia and nitrite are calm. AquoraX is watching for nitrate before calling the cycle complete.');
   return items;
 }
 function formatDate(iso){
@@ -131,15 +142,26 @@ function closeModal(){
 
 $('testForm').addEventListener('submit', (e) => {
   e.preventDefault();
+  const previousLatest = latest();
   const test = { date: new Date().toISOString(), ammonia: num($('ammonia').value), nitrite: num($('nitrite').value), nitrate: num($('nitrate').value), ph: num($('ph').value) };
   if(test.ammonia === null && test.nitrite === null && test.nitrate === null && test.ph === null){ $('saveMsg').textContent = 'Add at least one reading first.'; return; }
+
+  const completedNow = shouldCelebrateCycleComplete(previousLatest, test);
   state.tests.unshift(test);
   state.tests = state.tests.slice(0, 30);
+  if(completedNow) state.cycleCompletePopupSeen = true;
+
   saveState();
-  $('saveMsg').textContent = 'Saved ✓';
+  $('saveMsg').textContent = nitratePresent(test) ? 'Saved ✓ Cycle complete' : 'Saved ✓';
   e.target.reset();
   render();
-  setTimeout(() => $('saveMsg').textContent = '', 2200);
+
+  if(completedNow){
+    window.setTimeout(() => {
+      openModal('Congratulations — your cycle is complete.', 'Your reef foundation is complete. Your journey has officially begun. Move slowly, keep testing, and let AquoraX help you build a stable reef with confidence.');
+    }, 120);
+  }
+  setTimeout(() => $('saveMsg').textContent = '', 2600);
 });
 $('colonyBtn').addEventListener('click', () => {
   if(state.colony) return;
