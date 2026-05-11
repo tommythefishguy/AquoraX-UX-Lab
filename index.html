@@ -1,437 +1,65 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AquoraX UX Lab — Cycle · Tests · Livestock · Care</title>
-  <link rel="stylesheet" href="css/styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AquoraX UX Lab</title>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <main class="app-shell">
-    <header class="topbar">
-      <div class="brand-lockup solo">
-        <img src="assets/aquorax-logo.png" alt="AquoraX — Track. Analyze. Optimize." class="aquorax-logo" />
-      </div>
-      <div class="mode-pill">Beginner Mode · UX Lab</div>
-    </header>
 
-    <section class="view view-active" id="cycleView" data-view="cycle">
-    <section class="brand-hero panel" aria-label="AquoraX Blue Shark Cycle Journey">
-      <img src="assets/aquorax-blue-shark-cycle.png" alt="AquoraX Cycle Journey partnered with Blue Shark Trading Co" class="cycle-banner" />
-      <div class="hero-actions brand-actions">
-        <a class="btn primary" href="https://finestaquatics.co.uk/search?q=atm" target="_blank" rel="noopener">Shop Blue Shark at Finest Aquatics ↗</a>
-        <button class="btn ghost" id="scrollToLog" type="button">Add water test</button>
-      </div>
-    </section>
+<header class="hero">
+    <h1>AquoraX OS — Reef Only</h1>
+    <p>Beginner Mode UX Lab</p>
+</header>
 
-    <section class="hero panel">
-      <div class="hero-copy">
-        <p class="eyebrow">AquoraX × Blue Shark Cycle Journey</p>
-        <h1>Start your reef with calm control.</h1>
-        <p class="hero-text">Log water signals, calculate Blue Shark support for your tank size, and follow the first steps of your reef journey from one clean home screen.</p>
-      </div>
-      <div class="hero-product compact-product">
-        <img src="assets/blue-shark-products.jpg" alt="Blue Shark Colony and Paradigm products" />
-      </div>
-    </section>
+<main>
 
-    <section class="calculator-zone panel" aria-label="Blue Shark dosing calculator and guides">
-      <section class="dose-panel" aria-labelledby="doseTitle">
-      <div class="dose-copy">
-        <p class="eyebrow">Blue Shark Dose Calculator</p>
-        <h3 id="doseTitle">Calculate by tank size</h3>
-        <p>Enter your tank volume to calculate Blue Shark support, then use the guide links before logging products. Paradigm is set to a 2-week rhythm in this UX Lab flow.</p>
-      </div>
-      <div class="dose-controls">
-        <label>Tank size<input id="tankVolume" type="number" inputmode="decimal" min="0" step="1" placeholder="e.g. 200" /></label>
-        <select id="tankUnit" aria-label="Tank volume unit">
-          <option value="litres">Litres</option>
-          <option value="gallons">US gallons</option>
-        </select>
-      </div>
-      <div class="dose-results">
-        <article class="dose-card cyan">
-          <p class="label">Rapid Cycle / Colony</p>
-          <strong id="colonyDose">Add tank size</strong>
-          <small>One-time foundation dose.</small>
-        </article>
-        <article class="dose-card purple">
-          <p class="label">Paradigm</p>
-          <strong id="paradigmDose">Add tank size</strong>
-          <small>Every 2 weeks in this UX Lab flow.</small>
-        </article>
-      </div>
-    </section>
+<section class="card">
+    <h2>Cycle</h2>
+    <p>AquoraX × Blue Shark Cycle Journey</p>
+</section>
 
-    <div class="support-row compact-support">
-      <article class="support-card cyan" id="colonyCard">
-        <p class="label">Rapid Cycle / Colony</p>
-        <strong id="colonyStatus">Not logged</strong>
-        <button class="btn primary wide" id="colonyBtn" type="button">Confirm Rapid Cycle added</button>
-        <a class="support-link" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Watch Colony / Rapid Cycle guide ↗</a>
-      </article>
-      <article class="support-card purple">
-        <p class="label">Paradigm · 2 week rhythm</p>
-        <strong id="paradigmStatus">Not logged</strong>
-        <button class="btn purple wide" id="paradigmBtn" type="button">Log Paradigm dose</button>
-        <a class="support-link" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Watch Paradigm / ATM playlist ↗</a>
-        <small id="paradigmNext" class="next-dose"></small>
-      </article>
+<section class="card">
+    <h2>Tests</h2>
+    <a href="https://finestaquatics.co.uk/search?q=water+test+kits&_pos=1&_psq=test&_ss=e&_v=1.0" target="_blank">
+        Water Test Kits
+    </a>
+</section>
+
+<section class="card">
+    <img src="assets/aquorax_finest_aquatics.png" class="partner-logo">
+    <h2>Livestock</h2>
+    <p>Fish and Coral Tracking</p>
+
+    <div class="cta-grid">
+        <a href="https://finestaquatics.co.uk/search?q=product_type%3ALivestock+AND+fish" target="_blank">Shop Fish</a>
+        <a href="https://finestaquatics.co.uk/search?q=product_type%3ALivestock+AND+coral" target="_blank">Shop Coral</a>
     </div>
+</section>
 
-    <section class="video-panel" aria-labelledby="blueSharkVideosTitle">
-      <div class="video-copy">
-        <p class="eyebrow">Blue Shark Guides</p>
-        <h3 id="blueSharkVideosTitle">Product guides built in</h3>
-        <p>Rapid Cycle, Paradigm and Blue Shark video links are kept beside the calculator so beginners learn before they add anything.</p>
-      </div>
-      <div class="video-grid">
-        <a class="video-card cyan" href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">
-          <span class="play">▶</span>
-          <strong>Colony / Rapid Cycle</strong>
-          <small>How the foundation bacteria support begins.</small>
-        </a>
-        <a class="video-card cyan" href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener">
-          <span class="play">▶</span>
-          <strong>Rapid Cycle Overview</strong>
-          <small>Understand the first step before logging Colony.</small>
-        </a>
-        <a class="video-card purple" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">
-          <span class="play">▶</span>
-          <strong>ATM Product Playlist</strong>
-          <small>Product support videos in one place.</small>
-        </a>
-        <a class="video-card purple" href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">
-          <span class="play">▶</span>
-          <strong>Blue Shark Channel</strong>
-          <small>Open the full Blue Shark Journey video library.</small>
-        </a>
-      </div>
-    </section>
-    </section>
+<section class="card">
+    <img src="assets/aquorax_finest_filters.png" class="partner-logo">
+    <h2>Care</h2>
 
-    <section class="command panel" aria-labelledby="cycleTitle">
-      <div class="command-head">
-        <div>
-          <p class="eyebrow">Live Cycle Panel</p>
-          <h2 id="cycleTitle">Your reef foundation</h2>
-        </div>
-        <button class="btn small" id="resetBtn" type="button">Reset</button>
-      </div>
+    <div class="glass-box">Water Flow</div>
+    <div class="glass-box">Filtration</div>
+    <div class="glass-box">Water Quality Support</div>
+    <div class="glass-box">RODI Water</div>
+    <div class="glass-box">Maintenance Rhythm</div>
 
-      <div class="status-grid">
-        <article class="stage-card" data-stage="1"><span>1</span><strong>Foundation</strong><small>Start logging</small></article>
-        <article class="stage-card" data-stage="2"><span>2</span><strong>Ammonia Watch</strong><small>Cycle activity</small></article>
-        <article class="stage-card" data-stage="3"><span>3</span><strong>Nitrite Watch</strong><small>Filter building</small></article>
-        <article class="stage-card" data-stage="4"><span>4</span><strong>Stability Watch</strong><small>Trend improving</small></article>
-        <article class="stage-card complete-stage" data-stage="5"><span>5</span><strong>Cycle Complete</strong><small>Journey begins</small></article>
-      </div>
+</section>
 
-      <div class="main-grid">
-        <div class="readout-card">
-          <div>
-            <p class="label">Current stage</p>
-            <h3 id="stageName">Foundation</h3>
-            <p id="stageDesc">Begin logging tests so AquoraX can follow the cycle trend.</p>
-          </div>
-          <div class="progress-ring" aria-label="cycle progress"><span id="progressText">25%</span><small>progress</small></div>
-        </div>
+</main>
 
-        <form class="test-form" id="testForm">
-          <div class="form-title">
-            <div><p class="eyebrow">Water Tests</p><h3>Log today’s readings</h3></div>
-            <span>Beginner safe</span>
-          </div>
-          <label>Ammonia <small>NH₃/NH₄</small><input id="ammonia" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" /></label>
-          <label>Nitrite <small>NO₂</small><input id="nitrite" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00" /></label>
-          <label>Nitrate <small>NO₃</small><input id="nitrate" type="number" inputmode="decimal" min="0" step="0.1" placeholder="0.0" /></label>
-          <label>pH <small>optional</small><input id="ph" type="number" inputmode="decimal" min="0" step="0.01" placeholder="8.10" /></label>
-          <button class="btn primary submit" type="submit">Save water test</button>
-          <p id="saveMsg" class="save-msg" aria-live="polite"></p>
-        </form>
-      </div>
+<nav class="bottom-nav">
+    <button>Cycle</button>
+    <button>Tests</button>
+    <button>Livestock</button>
+    <button>Care</button>
+</nav>
 
-    </section>
-
-    <section class="guidance panel">
-      <div>
-        <p class="eyebrow">AquoraX Guidance</p>
-        <h2 id="guidanceTitle">Foundation guidance</h2>
-        <p>AquoraX uses your latest readings to give calm, beginner-safe cycle guidance.</p>
-      </div>
-      <div id="guidanceList" class="guidance-list"></div>
-    </section>
-
-    <section class="history panel">
-      <div class="command-head">
-        <div><p class="eyebrow">Latest Tests</p><h2>Water history</h2></div>
-        <button class="btn small" id="clearHistory" type="button">Clear</button>
-      </div>
-      <div id="historyList" class="history-list"></div>
-    </section>
-    </section>
-
-    <section class="view" id="testsView" data-view="tests" aria-label="AquoraX reef tests">
-      <section class="tests-hero panel">
-        <div>
-          <p class="eyebrow">AquoraX Reef Tests</p>
-          <h1>Track the signals that keep your reef stable.</h1>
-          <p>Log the core reef parameters in one calm place. AquoraX translates the numbers into simple beginner-safe states so the app feels useful, not overwhelming.</p>
-        </div>
-        <button class="btn primary" id="testsFocusBtn" type="button">Log reef test</button>
-      </section>
-
-
-
-      <section class="tests-partner panel" aria-label="Finest Aquatics reef test kits">
-        <div class="partner-copy">
-          <p class="eyebrow">Finest Aquatics · Testing Partner</p>
-          <h2>Shop trusted reef water test kits.</h2>
-          <p>Get reliable reef testing tools for salinity, alkalinity, nitrate, phosphate and the core parameters AquoraX tracks.</p>
-        </div>
-        <a class="btn primary" href="https://finestaquatics.co.uk/search?q=water+test+kits&_pos=1&_psq=test&_ss=e&_v=1.0" target="_blank" rel="noopener">Shop Water Test Kits ↗</a>
-      </section>
-
-      <section class="reef-snapshot panel">
-        <div class="command-head">
-          <div>
-            <p class="eyebrow">Reef Health Snapshot</p>
-            <h2>Main tank parameters</h2>
-          </div>
-          <span class="mode-pill small-pill">Beginner safe</span>
-        </div>
-        <div class="param-grid" id="paramGrid"></div>
-      </section>
-
-      <section class="tests-entry panel">
-        <form class="reef-test-form" id="reefTestForm">
-          <div class="form-title tests-form-head">
-            <div><p class="eyebrow">Tests</p><h3>Log today’s reef readings</h3></div>
-            <div class="unit-switches" aria-label="Test unit preferences">
-              <label>Temp unit<select id="tempUnit"><option value="c">°C</option><option value="f">°F</option></select></label>
-              <label>Salinity unit<select id="salinityUnit"><option value="ppt">ppt</option><option value="sg">SG</option></select></label>
-            </div>
-          </div>
-          <label>Temperature <small id="tempUnitLabel">°C</small><input id="temp" type="number" inputmode="decimal" step="0.1" placeholder="25.0" /></label>
-          <label>Salinity <small id="salinityUnitLabel">ppt</small><input id="salinity" type="number" inputmode="decimal" step="0.001" placeholder="35.0" /></label>
-          <label>pH <small>optional</small><input id="testPh" type="number" inputmode="decimal" step="0.01" placeholder="8.10" /></label>
-          <label>Alkalinity <small>dKH</small><input id="alk" type="number" inputmode="decimal" step="0.1" placeholder="8.0" /></label>
-          <label>Nitrate <small>NO₃</small><input id="testNitrate" type="number" inputmode="decimal" step="0.1" placeholder="10" /></label>
-          <label>Phosphate <small>PO₄</small><input id="phosphate" type="number" inputmode="decimal" step="0.01" placeholder="0.05" /></label>
-          <label>Calcium <small>optional</small><input id="calcium" type="number" inputmode="decimal" step="1" placeholder="420" /></label>
-          <label>Magnesium <small>optional</small><input id="magnesium" type="number" inputmode="decimal" step="1" placeholder="1350" /></label>
-          <button class="btn primary submit" type="submit">Save reef test</button>
-          <p id="reefSaveMsg" class="save-msg" aria-live="polite"></p>
-        </form>
-      </section>
-
-      <section class="tests-guidance panel">
-        <div>
-          <p class="eyebrow">AquoraX Interpretation</p>
-          <h2 id="reefGuidanceTitle">Reef guidance</h2>
-          <p>Beginner Mode keeps guidance calm: review, watch and keep trends stable before making changes.</p>
-        </div>
-        <div id="reefGuidanceList" class="guidance-list"></div>
-      </section>
-
-      <section class="history panel">
-        <div class="command-head">
-          <div><p class="eyebrow">Reef Test History</p><h2>Saved reef readings</h2></div>
-          <button class="btn small" id="clearReefHistory" type="button">Clear</button>
-        </div>
-        <div id="reefHistoryList" class="history-list"></div>
-      </section>
-    </section>
-
-
-
-    <section class="view" id="livestockView" data-view="livestock" aria-label="AquoraX livestock tracker">
-      <section class="livestock-hero panel">
-        <div>
-          <p class="eyebrow">AquoraX Livestock</p>
-          <h1>Track coral and fish with calm confidence.</h1>
-          <p>Save each coral or fish, add photos, monitor growth or condition, and keep a simple journal without overwhelming the beginner experience.</p>
-        </div>
-        <button class="btn primary" id="livestockFocusBtn" type="button">Add livestock</button>
-      </section>
-
-
-
-      <section class="livestock-partner panel" aria-label="Finest Aquatics livestock links">
-        <div class="partner-copy">
-          <p class="eyebrow">Finest Aquatics Livestock</p>
-          <h2>Find your next coral or fish.</h2>
-          <p>Quick access to Finest Aquatics livestock stock so reef keepers can browse fish and corals from inside the Livestock section.</p>
-        </div>
-        <div class="livestock-shop-actions">
-          <a class="btn primary" href="https://finestaquatics.co.uk/search?q=product_type%3ALivestock+AND+fish" target="_blank" rel="noopener">Shop Fish Stock ↗</a>
-          <a class="btn ghost" href="https://finestaquatics.co.uk/search?q=product_type%3ALivestock+AND+coral" target="_blank" rel="noopener">Shop Corals ↗</a>
-        </div>
-      </section>
-
-      <section class="livestock-entry panel" id="livestockEntry">
-        <form class="livestock-form" id="livestockForm">
-          <div class="form-title livestock-form-head">
-            <div>
-              <p class="eyebrow">Livestock Tracker</p>
-              <h3>Add coral or fish</h3>
-            </div>
-            <span>Beginner safe</span>
-          </div>
-
-          <label>Type
-            <select id="lifeType">
-              <option value="coral">Coral</option>
-              <option value="fish">Fish</option>
-            </select>
-          </label>
-          <label>Name
-            <input id="lifeName" type="text" placeholder="e.g. Torch coral / Clownfish" />
-          </label>
-          <label>Location
-            <input id="lifeLocation" type="text" placeholder="e.g. Left rock / top shelf" />
-          </label>
-          <label>First photo
-            <input id="lifePhoto" type="file" accept="image/*" />
-          </label>
-
-          <div class="growth-explainer">
-            <strong>Growth compare</strong>
-            <small>Add the first photo now. Each livestock card lets you add more growth photos later, then slide between the first and latest image to see real change.</small>
-          </div>
-
-          <label class="wide-field">Notes / journal
-            <textarea id="lifeNotes" rows="4" placeholder="What changed? Extension, colour, feeding, behaviour, placement, confidence..."></textarea>
-          </label>
-
-          <div class="photo-preview" id="photoPreview">First photo preview appears here</div>
-          <button class="btn primary submit" type="submit">Save livestock</button>
-          <p id="lifeSaveMsg" class="save-msg" aria-live="polite"></p>
-        </form>
-      </section>
-
-      <section class="livestock-dashboard panel">
-        <div class="command-head">
-          <div>
-            <p class="eyebrow">Tracked Livestock</p>
-            <h2>Corals and fish</h2>
-          </div>
-          <div class="filter-pills" role="group" aria-label="Livestock filter">
-            <button class="filter-btn active" data-filter="all" type="button">All</button>
-            <button class="filter-btn" data-filter="coral" type="button">Coral</button>
-            <button class="filter-btn" data-filter="fish" type="button">Fish</button>
-          </div>
-        </div>
-        <div id="livestockGrid" class="livestock-grid"></div>
-      </section>
-    </section>
-
-
-    <section class="view" id="careView" data-view="care" aria-label="AquoraX care and reef stability systems">
-      <section class="care-hero panel">
-        <div class="care-hero-copy">
-          <p class="eyebrow">AquoraX Care × Finest Filters</p>
-          <h1>Keep your reef stable without the confusion.</h1>
-          <p>Beginner Mode turns flow, filtration, RODI water and maintenance into calm reef care systems: what it does, why it matters, and when to check it.</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="https://finest-filters.co.uk/" target="_blank" rel="noopener">Visit Finest Filters ↗</a>
-            <button class="btn ghost" id="careFocusBtn" type="button">Check care tasks</button>
-          </div>
-        </div>
-        <div class="finest-filters-lockup">
-          <img src="assets/finest-filters-logo.png" alt="Finest Filters — The Filtration Experts" />
-          <span>The Filtration Experts</span>
-        </div>
-      </section>
-
-      <section class="care-systems panel" aria-label="Reef Stability Systems">
-        <div class="command-head care-head">
-          <div>
-            <p class="eyebrow">Reef Stability Systems</p>
-            <h2>Care made simple</h2>
-            <p class="care-subcopy">Each system is explained in beginner-safe language, with a direct equipment link only where it helps.</p>
-          </div>
-          <span class="mode-pill care-pill">Beginner safe</span>
-        </div>
-
-        <div class="care-system-grid">
-          <article class="care-system-card flow-card">
-            <span class="care-icon">〰</span>
-            <h3>Water Flow</h3>
-            <p>Flow keeps oxygen moving, prevents waste build-up and helps corals stay healthier.</p>
-            <div class="care-mini-list"><span>Return pump</span><span>Wavemakers</span><span>Gyres</span></div>
-            <a class="care-partner-link" href="https://finest-filters.co.uk/search?q=wave+maker&_pos=2&_psq=wave&_ss=e&_v=1.0" target="_blank" rel="noopener">Shop flow & wave makers ↗</a>
-          </article>
-
-          <article class="care-system-card filtration-card">
-            <span class="care-icon">◌</span>
-            <h3>Filtration</h3>
-            <p>Filtration removes visible waste and helps the reef stay stable as the tank matures.</p>
-            <div class="care-mini-list"><span>Filter socks</span><span>Roller filters</span><span>Skimmer</span></div>
-            <a class="care-partner-link" href="https://finest-filters.co.uk/search?q=aquarium+filter+media&_pos=2&_psq=media&_ss=e&_v=1.0" target="_blank" rel="noopener">Shop filtration media ↗</a>
-          </article>
-
-          <article class="care-system-card support-card-care">
-            <span class="care-icon">✦</span>
-            <h3>Water Quality Support</h3>
-            <p>Support media can help polish water and keep nutrients easier to manage.</p>
-            <div class="care-mini-list"><span>Carbon</span><span>Phosphate media</span><span>UV</span></div>
-            <a class="care-partner-link" href="https://finest-filters.co.uk/search?q=aquarium+filter+media&_pos=2&_psq=media&_ss=e&_v=1.0" target="_blank" rel="noopener">Shop support media ↗</a>
-          </article>
-
-          <article class="care-system-card rodi-card">
-            <span class="care-icon">H₂O</span>
-            <h3>RODI Water</h3>
-            <p>Pure source water helps avoid unwanted nutrients, algae pressure and instability.</p>
-            <div class="care-mini-list"><span>TDS checks</span><span>Filter age</span><span>Top-up water</span></div>
-            <a class="care-partner-link" href="https://finest-filters.co.uk/collections/ro-units?_pos=1&_psq=ro&_ss=e&_v=1.0" target="_blank" rel="noopener">Shop RO units ↗</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="care-tasks panel" id="careTasksPanel">
-        <div class="command-head">
-          <div>
-            <p class="eyebrow">Simple Care Checks</p>
-            <h2>Maintenance rhythm</h2>
-            <p class="care-subcopy">No advanced tuning yet — just calm reminders for the checks beginners actually understand.</p>
-          </div>
-          <button class="btn small" id="resetCareBtn" type="button">Reset care</button>
-        </div>
-        <div id="careTaskGrid" class="care-task-grid"></div>
-      </section>
-
-      <section class="care-guidance panel">
-        <div>
-          <p class="eyebrow">AquoraX Guidance</p>
-          <h2>Care guidance</h2>
-          <p>Use small, consistent care checks instead of making lots of changes at once.</p>
-        </div>
-        <div class="guidance-list">
-          <div class="guidance-item">Review flow and filtration when waste builds up, corals look irritated, or water clarity changes.</div>
-          <div class="guidance-item">Keep RODI water quality stable before chasing reef numbers. Source water affects everything.</div>
-        </div>
-      </section>
-    </section>
-
-    <nav class="bottom-nav" aria-label="Beginner navigation">
-      <button class="nav-btn active" data-target="cycle" type="button">Cycle</button>
-      <button class="nav-btn" data-target="tests" type="button">Tests</button>
-      <button class="nav-btn" data-target="livestock" type="button">Livestock</button>
-      <button class="nav-btn" data-target="care" type="button">Care</button>
-    </nav>
-  </main>
-
-  <div class="modal-backdrop" id="modalBackdrop" hidden>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <button class="modal-close" id="modalClose" type="button" aria-label="Close">×</button>
-      <p class="eyebrow">AquoraX Cycle Journey</p>
-      <h2 id="modalTitle">Congratulations.</h2>
-      <p id="modalText">This is your first step into your reefing journey.</p>
-      <button class="btn primary wide" id="modalOk" type="button">Continue Journey</button>
-    </div>
-  </div>
-
-  <script src="js/app.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
