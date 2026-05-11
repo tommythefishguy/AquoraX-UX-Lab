@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AquoraX OS — UX Lab</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="reef-bg"></div>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <img src="assets/aquorax-logo.png" alt="AquoraX" class="aq-logo" />
+        <span class="x-mark">×</span>
+        <img src="assets/blue-shark-logo.png" alt="Blue Shark" class="bs-logo" />
+      </div>
+      <span class="mode-pill">Beginner Mode · UX Lab</span>
+    </header>
+
+    <section class="hero glass-card">
+      <div class="hero-copy">
+        <p class="eyebrow">AquoraX Cycle Journey</p>
+        <h1>Start your reef with confidence.</h1>
+        <p class="hero-text">Track your cycle, log water tests, and follow calm Blue Shark guidance from one clean home screen.</p>
+        <div class="hero-actions">
+          <a href="https://finestaquatics.co.uk/search?q=atm" target="_blank" rel="noopener" class="primary-btn">Shop Blue Shark at Finest Aquatics</a>
+          <button class="secondary-btn" data-scroll="testsCard">Add water test</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="product-orbit"></div>
+        <img src="assets/blue-shark-products.jpg" alt="Blue Shark Colony and Paradigm products" />
+      </div>
+    </section>
+
+    <section class="status-grid">
+      <article class="glass-card journey-card" id="journeyCard">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Cycle Journey</p>
+            <h2>Where your reef is now</h2>
+          </div>
+          <button class="ghost-btn" id="resetJourneyBtn">Reset</button>
+        </div>
+
+        <div class="stage-track" id="stageTrack"></div>
+
+        <div class="journey-focus">
+          <div>
+            <span class="label">Current stage</span>
+            <h3 id="currentStageTitle">Foundation</h3>
+            <p id="currentStageText">Add your first ammonia, nitrite, and nitrate readings to begin tracking the cycle.</p>
+          </div>
+          <div class="confidence-ring">
+            <strong id="confidenceValue">0%</strong>
+            <span>progress</span>
+          </div>
+        </div>
+
+        <div class="blue-shark-modules">
+          <div class="mini-module cyan">
+            <span>Colony</span>
+            <strong id="colonyStatus">Not logged</strong>
+            <button id="logColonyBtn">Log Colony used</button>
+          </div>
+          <div class="mini-module violet">
+            <span>Paradigm</span>
+            <strong id="paradigmStatus">Not logged</strong>
+            <button id="logParadigmBtn">Log Paradigm dose</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="glass-card tests-card" id="testsCard">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Water Tests</p>
+            <h2>Log today’s readings</h2>
+          </div>
+          <span class="safe-pill">Beginner safe</span>
+        </div>
+
+        <form id="testForm" class="test-form">
+          <label>Ammonia <span>NH₃/NH₄</span><input type="number" step="0.01" min="0" id="ammonia" placeholder="0.00" /></label>
+          <label>Nitrite <span>NO₂</span><input type="number" step="0.01" min="0" id="nitrite" placeholder="0.00" /></label>
+          <label>Nitrate <span>NO₃</span><input type="number" step="0.1" min="0" id="nitrate" placeholder="0.0" /></label>
+          <label>pH <span>optional</span><input type="number" step="0.01" min="0" id="ph" placeholder="8.10" /></label>
+          <button class="primary-btn full" type="submit">Save water test</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="glass-card guidance-card">
+        <p class="eyebrow">AquoraX Guidance</p>
+        <h2 id="guidanceTitle">Ready for your first test</h2>
+        <p id="guidanceText">Add your readings and AquoraX will help you understand what they suggest without panic language or confusing chemistry.</p>
+        <div class="guidance-list" id="guidanceList"></div>
+      </article>
+
+      <article class="glass-card history-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Latest Tests</p>
+            <h2>Water history</h2>
+          </div>
+          <button class="ghost-btn" id="clearTestsBtn">Clear</button>
+        </div>
+        <div id="testHistory" class="history-list empty">No tests logged yet.</div>
+      </article>
+    </section>
+
+    <section class="partner-strip glass-card">
+      <img src="assets/finest-aquatics-logo.png" alt="Finest Aquatics" />
+      <div>
+        <p class="eyebrow">Official retail link</p>
+        <h2>Blue Shark products at Finest Aquatics</h2>
+        <p>Keep the buying journey simple and official from inside AquoraX.</p>
+      </div>
+      <a href="https://finestaquatics.co.uk/search?q=atm" target="_blank" rel="noopener" class="primary-btn">Open products</a>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="active">Home</button>
+    <button data-scroll="journeyCard">Journey</button>
+    <button data-scroll="testsCard">Tests</button>
+    <button data-scroll="testHistory">History</button>
+  </nav>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
