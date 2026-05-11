@@ -188,3 +188,111 @@ $('modalOk').addEventListener('click', closeModal);
 $('modalBackdrop').addEventListener('click', (e) => { if(e.target === $('modalBackdrop')) closeModal(); });
 document.querySelectorAll('.stage-card').forEach(card => card.addEventListener('click', () => card.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' })));
 render();
+
+// Beginner Mode Cycle / Tests navigation + reef testing module
+const REEF_STORE_KEY = 'aquoraxBeginnerReefTestsV1';
+let reefState = loadReefState();
+
+function loadReefState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(REEF_STORE_KEY));
+    return saved && typeof saved === 'object' ? { reefTests: [], ...saved } : { reefTests: [] };
+  } catch { return { reefTests: [] }; }
+}
+function saveReefState(){ localStorage.setItem(REEF_STORE_KEY, JSON.stringify(reefState)); }
+function latestReef(){ return reefState.reefTests[0] || null; }
+function setView(view){
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('view-active', v.dataset.view === view));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.target === view));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+const paramDefs = [
+  { key:'temp', label:'Temperature', unit:'°C', meaning:'Thermal stability', ideal:[24,26], watch:[23,27], dp:1 },
+  { key:'salinity', label:'Salinity', unit:'ppt', meaning:'Salt balance', ideal:[34,36], watch:[33,37], dp:1 },
+  { key:'ph', label:'pH', unit:'', meaning:'Daily rhythm', ideal:[8.0,8.4], watch:[7.8,8.5], dp:2 },
+  { key:'alk', label:'Alkalinity', unit:'dKH', meaning:'Reef stability', ideal:[7.5,9.5], watch:[7,11], dp:1 },
+  { key:'nitrate', label:'Nitrate', unit:'ppm', meaning:'Nutrient level', ideal:[2,20], watch:[0,40], dp:1 },
+  { key:'phosphate', label:'Phosphate', unit:'ppm', meaning:'Nutrient balance', ideal:[0.03,0.12], watch:[0.01,0.25], dp:2 },
+  { key:'calcium', label:'Calcium', unit:'ppm', meaning:'Coral building', ideal:[400,450], watch:[380,480], dp:0 },
+  { key:'magnesium', label:'Magnesium', unit:'ppm', meaning:'Buffer support', ideal:[1250,1400], watch:[1200,1500], dp:0 }
+];
+function statusFor(value, def){
+  if(value === null || value === undefined) return { label:'Not logged', tone:'empty', note:'Add a reading to start tracking.' };
+  if(value >= def.ideal[0] && value <= def.ideal[1]) return { label:'Stable', tone:'good', note:'Inside beginner-safe target range.' };
+  if(value >= def.watch[0] && value <= def.watch[1]) return { label:'Watch', tone:'watch', note:'Near range. Review trend before changing anything.' };
+  return { label:'Review', tone:'review', note:'Outside comfort range. Re-test and review stability.' };
+}
+function displayValue(value, def){
+  if(value === null || value === undefined) return '—';
+  return `${Number(value).toFixed(def.dp).replace(/\.0$|\.00$/, '')}${def.unit ? ' ' + def.unit : ''}`;
+}
+function renderReefTests(){
+  const test = latestReef();
+  const grid = $('paramGrid');
+  if(grid){
+    grid.innerHTML = paramDefs.map(def => {
+      const value = test ? test[def.key] : null;
+      const status = statusFor(value, def);
+      return `<article class="param-card ${status.tone}"><div><p class="label">${def.meaning}</p><h3>${def.label}</h3></div><strong>${displayValue(value, def)}</strong><span>${status.label}</span><small>${status.note}</small></article>`;
+    }).join('');
+  }
+  const guidance = $('reefGuidanceList');
+  if(guidance){
+    if(!test){
+      guidance.innerHTML = '<div class="guidance-item">Log your first reef test to unlock a calm snapshot of temperature, salinity, pH, alkalinity, nitrate and phosphate.</div><div class="guidance-item">Beginner Mode focuses on trends and stability before suggesting any action.</div>';
+    } else {
+      const review = paramDefs.map(def => ({ def, value:test[def.key], status: statusFor(test[def.key], def) }));
+      const watch = review.filter(x => x.status.tone === 'watch').map(x => x.def.label);
+      const reviewItems = review.filter(x => x.status.tone === 'review').map(x => x.def.label);
+      const items = [];
+      if(!watch.length && !reviewItems.length) items.push('Your logged reef signals look stable. Keep watching the trend rather than chasing small daily movement.');
+      if(watch.length) items.push(`Watch ${watch.join(', ')} over the next readings. AquoraX is looking for pattern, not panic.`);
+      if(reviewItems.length) items.push(`Review ${reviewItems.join(', ')}. Re-test calmly and compare against recent readings before making changes.`);
+      items.push('Keep the reef steady: small changes, consistent testing, and patient observation.');
+      guidance.innerHTML = items.map(t => `<div class="guidance-item">${t}</div>`).join('');
+    }
+  }
+  const history = $('reefHistoryList');
+  if(history){
+    if(!reefState.reefTests.length){ history.innerHTML = '<div class="history-empty">No reef tests saved yet.</div>'; return; }
+    history.innerHTML = reefState.reefTests.map(t => `<article class="history-item"><div class="history-date">${formatDate(t.date)}</div><div class="chips"><span class="chip">Temp ${displayValue(t.temp,paramDefs[0])}</span><span class="chip">Sal ${displayValue(t.salinity,paramDefs[1])}</span><span class="chip">KH ${displayValue(t.alk,paramDefs[3])}</span><span class="chip">NO₃ ${displayValue(t.nitrate,paramDefs[4])}</span><span class="chip">PO₄ ${displayValue(t.phosphate,paramDefs[5])}</span></div></article>`).join('');
+  }
+}
+
+function bindBeginnerNav(){
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.target)));
+  const testsFocus = $('testsFocusBtn');
+  if(testsFocus) testsFocus.addEventListener('click', () => $('reefTestForm').scrollIntoView({ behavior:'smooth', block:'center' }));
+  const reefForm = $('reefTestForm');
+  if(reefForm){
+    reefForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const test = {
+        date: new Date().toISOString(),
+        temp: num($('temp').value),
+        salinity: num($('salinity').value),
+        ph: num($('testPh').value),
+        alk: num($('alk').value),
+        nitrate: num($('testNitrate').value),
+        phosphate: num($('phosphate').value),
+        calcium: num($('calcium').value),
+        magnesium: num($('magnesium').value)
+      };
+      const hasAny = Object.keys(test).some(k => k !== 'date' && test[k] !== null);
+      if(!hasAny){ $('reefSaveMsg').textContent = 'Add at least one reef reading first.'; return; }
+      reefState.reefTests.unshift(test);
+      reefState.reefTests = reefState.reefTests.slice(0, 40);
+      saveReefState();
+      reefForm.reset();
+      $('reefSaveMsg').textContent = 'Reef test saved ✓';
+      renderReefTests();
+      setTimeout(() => $('reefSaveMsg').textContent = '', 2400);
+    });
+  }
+  const clearReef = $('clearReefHistory');
+  if(clearReef) clearReef.addEventListener('click', () => { if(confirm('Clear reef test history?')){ reefState.reefTests = []; saveReefState(); renderReefTests(); } });
+}
+
+bindBeginnerNav();
+renderReefTests();

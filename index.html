@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AquoraX UX Lab — Home</title>
+  <title>AquoraX UX Lab — Cycle + Tests</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -12,9 +12,10 @@
       <div class="brand-lockup solo">
         <img src="assets/aquorax-logo.png" alt="AquoraX — Track. Analyze. Optimize." class="aquorax-logo" />
       </div>
-      <div class="mode-pill">UX Lab · Home only</div>
+      <div class="mode-pill">Beginner Mode · UX Lab</div>
     </header>
 
+    <section class="view view-active" id="cycleView" data-view="cycle">
     <section class="brand-hero panel" aria-label="AquoraX Blue Shark Cycle Journey">
       <img src="assets/aquorax-blue-shark-cycle.png" alt="AquoraX Cycle Journey partnered with Blue Shark Trading Co" class="cycle-banner" />
       <div class="hero-actions brand-actions">
@@ -168,6 +169,69 @@
       </div>
       <div id="historyList" class="history-list"></div>
     </section>
+    </section>
+
+    <section class="view" id="testsView" data-view="tests" aria-label="AquoraX reef tests">
+      <section class="tests-hero panel">
+        <div>
+          <p class="eyebrow">AquoraX Reef Tests</p>
+          <h1>Track the signals that keep your reef stable.</h1>
+          <p>Log the core reef parameters in one calm place. AquoraX translates the numbers into simple beginner-safe states so the app feels useful, not overwhelming.</p>
+        </div>
+        <button class="btn primary" id="testsFocusBtn" type="button">Log reef test</button>
+      </section>
+
+      <section class="reef-snapshot panel">
+        <div class="command-head">
+          <div>
+            <p class="eyebrow">Reef Health Snapshot</p>
+            <h2>Main tank parameters</h2>
+          </div>
+          <span class="mode-pill small-pill">Beginner safe</span>
+        </div>
+        <div class="param-grid" id="paramGrid"></div>
+      </section>
+
+      <section class="tests-entry panel">
+        <form class="reef-test-form" id="reefTestForm">
+          <div class="form-title">
+            <div><p class="eyebrow">Tests</p><h3>Log today’s reef readings</h3></div>
+          </div>
+          <label>Temperature <small>°C</small><input id="temp" type="number" inputmode="decimal" step="0.1" placeholder="25.0" /></label>
+          <label>Salinity <small>ppt</small><input id="salinity" type="number" inputmode="decimal" step="0.1" placeholder="35.0" /></label>
+          <label>pH <small>optional</small><input id="testPh" type="number" inputmode="decimal" step="0.01" placeholder="8.10" /></label>
+          <label>Alkalinity <small>dKH</small><input id="alk" type="number" inputmode="decimal" step="0.1" placeholder="8.0" /></label>
+          <label>Nitrate <small>NO₃</small><input id="testNitrate" type="number" inputmode="decimal" step="0.1" placeholder="10" /></label>
+          <label>Phosphate <small>PO₄</small><input id="phosphate" type="number" inputmode="decimal" step="0.01" placeholder="0.05" /></label>
+          <label>Calcium <small>optional</small><input id="calcium" type="number" inputmode="decimal" step="1" placeholder="420" /></label>
+          <label>Magnesium <small>optional</small><input id="magnesium" type="number" inputmode="decimal" step="1" placeholder="1350" /></label>
+          <button class="btn primary submit" type="submit">Save reef test</button>
+          <p id="reefSaveMsg" class="save-msg" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="tests-guidance panel">
+        <div>
+          <p class="eyebrow">AquoraX Interpretation</p>
+          <h2 id="reefGuidanceTitle">Reef guidance</h2>
+          <p>Beginner Mode keeps guidance calm: review, watch and keep trends stable before making changes.</p>
+        </div>
+        <div id="reefGuidanceList" class="guidance-list"></div>
+      </section>
+
+      <section class="history panel">
+        <div class="command-head">
+          <div><p class="eyebrow">Reef Test History</p><h2>Saved reef readings</h2></div>
+          <button class="btn small" id="clearReefHistory" type="button">Clear</button>
+        </div>
+        <div id="reefHistoryList" class="history-list"></div>
+      </section>
+    </section>
+
+    <nav class="bottom-nav" aria-label="Beginner navigation">
+      <button class="nav-btn active" data-target="cycle" type="button">Cycle</button>
+      <button class="nav-btn" data-target="tests" type="button">Tests</button>
+    </nav>
   </main>
 
   <div class="modal-backdrop" id="modalBackdrop" hidden>
