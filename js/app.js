@@ -363,12 +363,39 @@ function loadLivestockState(){
     return { items: [] };
   } catch { return { items: [] }; }
 }
-function saveLivestockState(){ localStorage.setItem(LIVESTOCK_STORE_KEY, JSON.stringify(livestockState)); }
+function saveLivestockState(){
+  try{
+    localStorage.setItem(LIVESTOCK_STORE_KEY, JSON.stringify(livestockState));
+    return true;
+  } catch(err){
+    console.warn('AquoraX livestock save failed', err);
+    const msg = $('lifeSaveMsg');
+    if(msg) msg.textContent = 'Could not save photo. Try a smaller image.';
+    return false;
+  }
+}
 function readPhoto(file){
   return new Promise((resolve) => {
     if(!file){ resolve(''); return; }
     const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const maxSide = 1200;
+        let { width, height } = img;
+        const scale = Math.min(1, maxSide / Math.max(width, height));
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.78));
+      };
+      img.onerror = () => resolve(String(reader.result || ''));
+      img.src = String(reader.result || '');
+    };
     reader.onerror = () => resolve('');
     reader.readAsDataURL(file);
   });
@@ -468,8 +495,9 @@ async function addGrowthPhoto(id){
     item.photos = item.photos || [];
     item.photos.push({ id:`${Date.now()}-${Math.random().toString(16).slice(2)}`, date:new Date().toISOString(), src, note:'Growth photo' });
     item.photo = src;
-    saveLivestockState();
-    renderLivestock();
+    if(saveLivestockState()){
+      renderLivestock();
+    }
   };
   input.click();
 }
@@ -517,7 +545,11 @@ function bindLivestock(){
       };
       livestockState.items.unshift(item);
       livestockState.items = livestockState.items.slice(0, 60);
-      saveLivestockState();
+      if(!saveLivestockState()){
+        livestockState.items = livestockState.items.filter(x => x.id !== id);
+        renderLivestock();
+        return;
+      }
       form.reset();
       pendingPhotoData = '';
       $('photoPreview').textContent = 'First photo preview appears here';
