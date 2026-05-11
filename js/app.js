@@ -562,3 +562,68 @@ function bindLivestock(){
 
 bindLivestock();
 renderLivestock();
+
+
+// AquoraX Beginner Care / Reef Stability Systems
+const CARE_STORE_KEY = 'aquoraxBeginnerCareV1';
+const careDefaults = [
+  { id:'flow', title:'Check water flow', system:'Water Flow', every:7, desc:'Look for dead spots, surface movement and normal wavemaker/return pump operation.' },
+  { id:'mechanical', title:'Clean mechanical filtration', system:'Filtration', every:3, desc:'Review filter socks, floss or roller filter use before waste builds up.' },
+  { id:'skimmer', title:'Check skimmer cup', system:'Filtration', every:7, desc:'Empty or review the skimmer cup so nutrient export stays consistent.' },
+  { id:'carbon', title:'Review carbon/media', system:'Water Quality Support', every:30, desc:'Check carbon or support media rhythm without making sudden changes.' },
+  { id:'rodi', title:'Check RODI source water', system:'RODI Water', every:14, desc:'Review TDS and filter age so source water stays reliable.' }
+];
+let careState = loadCareState();
+function loadCareState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(CARE_STORE_KEY));
+    return saved && typeof saved === 'object' ? { checked:{}, ...saved } : { checked:{} };
+  } catch { return { checked:{} }; }
+}
+function saveCareState(){ localStorage.setItem(CARE_STORE_KEY, JSON.stringify(careState)); }
+function careDaysSince(date){
+  if(!date) return Infinity;
+  return Math.floor((Date.now() - new Date(date).getTime()) / 86400000);
+}
+function careStatus(task){
+  const last = careState.checked[task.id];
+  if(!last) return { label:'Not checked yet', tone:'review' };
+  const days = careDaysSince(last);
+  if(days >= task.every) return { label:'Check today', tone:'review' };
+  if(days >= Math.max(1, task.every - 2)) return { label:'Coming up', tone:'watch' };
+  return { label:'On rhythm', tone:'good' };
+}
+function renderCare(){
+  const grid = $('careTaskGrid');
+  if(!grid) return;
+  grid.innerHTML = careDefaults.map(task => {
+    const status = careStatus(task);
+    const last = careState.checked[task.id];
+    return `<article class="care-task-card ${status.tone === 'good' ? '' : status.tone}">
+      <span class="care-frequency">${task.system} · every ${task.every} days</span>
+      <h3>${task.title}</h3>
+      <p>${task.desc}</p>
+      <span class="care-status ${status.tone}">${status.label}</span>
+      <small class="care-last">${last ? 'Last checked ' + formatDate(last) : 'No check saved yet'}</small>
+      <button class="btn ${status.tone === 'good' ? 'ghost' : 'primary'}" data-care-check="${task.id}" type="button">Mark checked</button>
+    </article>`;
+  }).join('');
+  grid.querySelectorAll('[data-care-check]').forEach(btn => btn.addEventListener('click', () => {
+    careState.checked[btn.dataset.careCheck] = new Date().toISOString();
+    saveCareState();
+    renderCare();
+  }));
+}
+function bindCare(){
+  const focus = $('careFocusBtn');
+  if(focus) focus.addEventListener('click', () => $('careTasksPanel').scrollIntoView({ behavior:'smooth', block:'start' }));
+  const reset = $('resetCareBtn');
+  if(reset) reset.addEventListener('click', () => {
+    if(!confirm('Reset care checks?')) return;
+    careState = { checked:{} };
+    saveCareState();
+    renderCare();
+  });
+}
+bindCare();
+renderCare();

@@ -134,3 +134,71 @@
   .livestock-shop-actions{display:grid;grid-template-columns:1fr;justify-content:stretch;}
   .livestock-shop-actions .btn{width:100%;}
 }
+
+
+/* AquoraX Care / Reef Stability Systems */
+.care-hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;padding:38px;margin-bottom:22px;}
+.care-hero h1{font-size:clamp(40px,6vw,72px);line-height:.94;margin:0 0 18px;letter-spacing:-.065em;max-width:820px;}
+.care-hero p:not(.eyebrow){font-size:18px;line-height:1.55;color:#c8d6e7;max-width:760px;margin:0;}
+.care-systems,.care-tasks,.care-guidance{padding:30px;margin-bottom:22px;}
+.care-head{align-items:flex-start;}
+.care-pill{font-size:13px;padding:9px 14px;}
+.care-system-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:22px;}
+.care-system-card{min-height:260px;border:1px solid rgba(67,230,255,.22);border-radius:26px;background:linear-gradient(145deg,rgba(15,38,58,.86),rgba(9,18,35,.92));padding:22px;display:flex;flex-direction:column;gap:12px;}
+.care-system-card h3{font-size:24px;margin:0;letter-spacing:-.03em;}
+.care-system-card p{color:#bdd0e3;line-height:1.5;margin:0;}
+.care-icon{width:52px;height:52px;border-radius:18px;border:1px solid rgba(67,230,255,.34);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-weight:900;font-size:20px;background:rgba(67,230,255,.08);}
+.care-mini-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;}
+.care-mini-list span{font-size:12px;color:#d8efff;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 10px;}
+.care-subcopy{color:#aebed2;margin:8px 0 0;max-width:560px;line-height:1.45;}
+.care-task-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px;}
+.care-task-card{border:1px solid rgba(67,230,255,.18);border-radius:24px;background:linear-gradient(145deg,rgba(17,35,54,.9),rgba(7,14,28,.94));padding:20px;display:flex;flex-direction:column;gap:12px;min-height:230px;}
+.care-task-card.watch{border-color:rgba(255,186,73,.45);}
+.care-task-card.review{border-color:rgba(255,82,120,.45);}
+.care-task-card h3{margin:0;font-size:21px;letter-spacing:-.02em;}
+.care-task-card p{margin:0;color:#b7c9db;line-height:1.45;}
+.care-frequency{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;}
+.care-status{display:inline-flex;width:max-content;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;background:rgba(67,230,255,.13);color:#9ff5ff;}
+.care-status.watch{background:rgba(255,186,73,.16);color:#ffd287;}
+.care-status.review{background:rgba(255,82,120,.16);color:#ff9ab1;}
+.care-task-card .btn{margin-top:auto;width:100%;}
+.care-last{font-size:12px;color:#91a7bd;}
+@media(max-width:980px){.care-system-grid,.care-task-grid{grid-template-columns:repeat(2,1fr)}.care-hero{grid-template-columns:1fr}}
+@media(max-width:640px){.care-hero,.care-systems,.care-tasks,.care-guidance{padding:22px}.care-system-grid,.care-task-grid{grid-template-columns:1fr}.care-hero h1{font-size:42px}.bottom-nav{grid-template-columns:repeat(4,1fr)}.nav-btn{font-size:12px;padding:12px 10px}}
+
+/* Care section rebuild — AquoraX × Finest Filters */
+#careView .panel{overflow:hidden;}
+#careView .care-hero{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:34px;margin-bottom:22px;}
+#careView .care-hero h1{font-size:clamp(38px,5.7vw,66px);line-height:.94;margin:0 0 18px;letter-spacing:-.065em;max-width:790px;}
+#careView .care-hero p:not(.eyebrow){font-size:17px;line-height:1.55;color:#c8d6e7;max-width:760px;margin:0 0 22px;}
+#careView .finest-filters-lockup{border:1px solid rgba(67,230,255,.24);border-radius:26px;background:linear-gradient(145deg,rgba(0,0,0,.34),rgba(255,255,255,.045));padding:24px;display:grid;place-items:center;text-align:center;min-height:180px;box-shadow:inset 0 0 40px rgba(67,230,255,.08);}
+#careView .finest-filters-lockup img{width:min(100%,360px);height:auto;object-fit:contain;display:block;filter:drop-shadow(0 0 16px rgba(67,230,255,.2));}
+#careView .finest-filters-lockup span{margin-top:12px;color:#6beeff;font-weight:900;letter-spacing:.12em;text-transform:uppercase;font-size:12px;}
+#careView .care-systems,#careView .care-tasks,#careView .care-guidance{padding:30px;margin-bottom:22px;}
+#careView .care-head{align-items:flex-start;}
+#careView .care-pill{font-size:13px;padding:9px 14px;}
+#careView .care-subcopy{color:#aebed2;margin:8px 0 0;max-width:650px;line-height:1.45;}
+#careView .care-system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px;}
+#careView .care-system-card{min-height:280px;border:1px solid rgba(67,230,255,.24);border-radius:26px;background:linear-gradient(145deg,rgba(15,38,58,.9),rgba(9,18,35,.94));padding:22px;display:flex;flex-direction:column;gap:13px;box-shadow:inset 0 0 34px rgba(67,230,255,.04);}
+#careView .care-system-card h3{font-size:26px;margin:0;letter-spacing:-.035em;}
+#careView .care-system-card p{color:#bdd0e3;line-height:1.5;margin:0;}
+#careView .care-icon{width:52px;height:52px;border-radius:18px;border:1px solid rgba(67,230,255,.34);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-weight:900;font-size:20px;background:rgba(67,230,255,.08);}
+#careView .care-mini-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
+#careView .care-mini-list span{font-size:12px;color:#d8efff;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);border-radius:999px;padding:8px 10px;}
+#careView .care-partner-link{margin-top:auto;min-height:48px;border-radius:999px;background:linear-gradient(135deg,var(--cyan),#5ff7ff);color:#02101a;text-decoration:none;font-weight:950;display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;box-shadow:0 0 28px rgba(67,230,255,.18);}
+#careView .filtration-card,#careView .support-card-care{border-color:rgba(154,77,255,.22);background:linear-gradient(145deg,rgba(23,30,61,.9),rgba(9,18,35,.94));}
+#careView .rodi-card{border-color:rgba(98,255,214,.24);}
+#careView .care-task-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:22px;}
+#careView .care-task-card{border:1px solid rgba(67,230,255,.18);border-radius:24px;background:linear-gradient(145deg,rgba(17,35,54,.9),rgba(7,14,28,.94));padding:20px;display:flex;flex-direction:column;gap:12px;min-height:230px;}
+#careView .care-task-card.watch{border-color:rgba(255,186,73,.45);}
+#careView .care-task-card.review{border-color:rgba(255,82,120,.45);}
+#careView .care-task-card h3{margin:0;font-size:21px;letter-spacing:-.02em;}
+#careView .care-task-card p{margin:0;color:#b7c9db;line-height:1.45;}
+#careView .care-frequency{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;}
+#careView .care-status{display:inline-flex;width:max-content;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;background:rgba(67,230,255,.13);color:#9ff5ff;}
+#careView .care-status.watch{background:rgba(255,186,73,.16);color:#ffd287;}
+#careView .care-status.review{background:rgba(255,82,120,.16);color:#ff9ab1;}
+#careView .care-task-card .btn{margin-top:auto;width:100%;}
+#careView .care-last{font-size:12px;color:#91a7bd;}
+@media(max-width:980px){#careView .care-hero{grid-template-columns:1fr;}#careView .care-system-grid,#careView .care-task-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:640px){#careView .care-hero,#careView .care-systems,#careView .care-tasks,#careView .care-guidance{padding:22px;}#careView .care-system-grid,#careView .care-task-grid{grid-template-columns:1fr;}#careView .care-hero h1{font-size:40px;}#careView .finest-filters-lockup{min-height:140px;}.bottom-nav{grid-template-columns:repeat(4,1fr)}.nav-btn{font-size:12px;padding:12px 10px}}
