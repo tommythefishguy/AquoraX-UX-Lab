@@ -79,6 +79,7 @@
             <h2>Log today’s readings</h2>
           </div>
           <span class="safe-pill">Beginner safe</span>
+          <span id="saveStatus" class="save-status" aria-live="polite"></span>
         </div>
 
         <form id="testForm" class="test-form">
@@ -87,6 +88,7 @@
           <label>Nitrate <span>NO₃</span><input type="number" step="0.1" min="0" id="nitrate" placeholder="0.0" /></label>
           <label>pH <span>optional</span><input type="number" step="0.01" min="0" id="ph" placeholder="8.10" /></label>
           <button class="primary-btn full" type="submit">Save water test</button>
+          <div id="latestSummary" class="latest-summary"><span>No saved test yet.</span></div>
         </form>
       </article>
     </section>
