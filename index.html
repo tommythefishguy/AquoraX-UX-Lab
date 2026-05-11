@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AquoraX UX Lab — Cycle · Tests · Livestock</title>
+  <title>AquoraX UX Lab — Cycle · Tests · Livestock · Care</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -326,10 +326,84 @@
       </section>
     </section>
 
+
+    <section class="view" id="careView" data-view="care" aria-label="AquoraX care and reef stability systems">
+      <section class="care-hero panel">
+        <div>
+          <p class="eyebrow">AquoraX Care</p>
+          <h1>Keep your reef stable without the confusion.</h1>
+          <p>Beginner Mode turns filtration, flow and maintenance into simple reef care systems: what it does, why it matters, and when to check it.</p>
+        </div>
+        <button class="btn primary" id="careFocusBtn" type="button">Check care tasks</button>
+      </section>
+
+      <section class="care-systems panel" aria-label="Reef Stability Systems">
+        <div class="command-head care-head">
+          <div>
+            <p class="eyebrow">Reef Stability Systems</p>
+            <h2>Care made simple</h2>
+          </div>
+          <span class="mode-pill care-pill">Beginner safe</span>
+        </div>
+
+        <div class="care-system-grid">
+          <article class="care-system-card">
+            <span class="care-icon">〰</span>
+            <h3>Water Flow</h3>
+            <p>Flow keeps oxygen moving, prevents waste build-up and helps corals stay healthier.</p>
+            <div class="care-mini-list"><span>Return pump</span><span>Wavemakers</span><span>Gyres</span></div>
+          </article>
+          <article class="care-system-card">
+            <span class="care-icon">◌</span>
+            <h3>Filtration</h3>
+            <p>Filtration removes waste and helps the reef stay stable as the tank matures.</p>
+            <div class="care-mini-list"><span>Filter socks</span><span>Roller filters</span><span>Skimmer</span></div>
+          </article>
+          <article class="care-system-card">
+            <span class="care-icon">✦</span>
+            <h3>Water Quality Support</h3>
+            <p>Support media can help polish water and keep nutrients easier to manage.</p>
+            <div class="care-mini-list"><span>Carbon</span><span>Phosphate media</span><span>UV</span></div>
+          </article>
+          <article class="care-system-card">
+            <span class="care-icon">H₂O</span>
+            <h3>RODI Water</h3>
+            <p>Pure source water helps avoid unwanted nutrients, algae pressure and instability.</p>
+            <div class="care-mini-list"><span>TDS checks</span><span>Filter age</span><span>Top-up water</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="care-tasks panel" id="careTasksPanel">
+        <div class="command-head">
+          <div>
+            <p class="eyebrow">Simple Care Checks</p>
+            <h2>Maintenance rhythm</h2>
+            <p class="care-subcopy">No advanced tuning yet — just calm reminders for the checks beginners actually understand.</p>
+          </div>
+          <button class="btn small" id="resetCareBtn" type="button">Reset care</button>
+        </div>
+        <div id="careTaskGrid" class="care-task-grid"></div>
+      </section>
+
+      <section class="care-guidance panel">
+        <div>
+          <p class="eyebrow">AquoraX Guidance</p>
+          <h2>Care guidance</h2>
+          <p>Use small, consistent care checks instead of making lots of changes at once.</p>
+        </div>
+        <div class="guidance-list">
+          <div class="guidance-item">Review flow and filtration when waste builds up, corals look irritated, or water clarity changes.</div>
+          <div class="guidance-item">Keep RODI water quality stable before chasing reef numbers. Source water affects everything.</div>
+        </div>
+      </section>
+    </section>
+
     <nav class="bottom-nav" aria-label="Beginner navigation">
       <button class="nav-btn active" data-target="cycle" type="button">Cycle</button>
       <button class="nav-btn" data-target="tests" type="button">Tests</button>
       <button class="nav-btn" data-target="livestock" type="button">Livestock</button>
+      <button class="nav-btn" data-target="care" type="button">Care</button>
     </nav>
   </main>
 
