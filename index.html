@@ -1,45 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AquoraX UX Lab</title>
-<style>
-body{background:#071018;color:#e8f6ff;font-family:Arial,sans-serif;margin:0;padding:20px;}
-.hero{background:rgba(40,90,140,.25);border:1px solid rgba(120,180,255,.2);padding:24px;border-radius:24px;margin-bottom:20px;}
-.card{background:rgba(255,255,255,.04);padding:18px;border-radius:18px;margin-bottom:16px;}
-button{background:#0f5ea8;color:white;border:none;padding:12px 18px;border-radius:12px;margin-right:8px;}
-input[type=range]{width:100%;}
-</style>
+<title>AquoraX Beginner Mode</title>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div class="hero">
-<h1>AquoraX Beginner Mode</h1>
-<p>Calm reef companion experience.</p>
-<button>AquoraX Cam</button>
-<button>Upload Photo</button>
+  <h1>AquoraX Beginner Mode</h1>
+  <p>Your calm reef companion.</p>
+  <div class="actions">
+    <button>AquoraX Cam</button>
+    <button>Upload Photo</button>
+  </div>
 </div>
 
-<div class="card">
-<h2>Coral Tracker</h2>
-<p>Track coral growth and reef health over time.</p>
-<label>Growth Progress</label>
-<input type="range" min="0" max="100" value="40">
-</div>
+<section class="card">
+  <h2>Coral Tracker</h2>
+  <p>Track coral growth visually over time.</p>
+  <input type="range" min="0" max="100" value="35">
+</section>
 
-<div class="card">
-<h2>Fish Tracker</h2>
-<p>Monitor feeding, health and behaviour.</p>
-<label>Health Status</label>
-<input type="range" min="0" max="100" value="75">
-</div>
+<section class="card">
+  <h2>Fish Tracker</h2>
+  <p>Monitor fish health and feeding.</p>
+  <input type="range" min="0" max="100" value="72">
+</section>
 
-<div class="card">
-<h2>Ask AquoraX</h2>
-<p>What would you like help with today?</p>
-<button>High Nitrate</button>
-<button>First Coral</button>
-<button>Understanding Alkalinity</button>
-</div>
+<section class="card">
+  <h2>Ask AquoraX</h2>
+  <p>What would you like help with today?</p>
+  <div class="chips">
+    <span>High Nitrate</span>
+    <span>First Coral</span>
+    <span>Water Changes</span>
+  </div>
+</section>
+
+<nav class="bottom-nav">
+  <div>Home</div>
+  <div>Livestock</div>
+  <div>Journey</div>
+  <div>Tests</div>
+  <div>Settings</div>
+</nav>
+
+<script src="js/app.js"></script>
 </body>
 </html>
