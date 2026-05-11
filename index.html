@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AquoraX UX Lab — Beginner Mode</title>
+  <title>AquoraX UX Lab — AquoraX Cam V2</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -23,27 +23,22 @@
         <p>Log tests, track livestock, follow your cycle journey and get calm guidance without the overwhelm.</p>
         <div class="hero-actions">
           <button data-go="tests">Log Water Test</button>
-          <button data-go="livestock" class="ghost">Add Livestock</button>
+          <button data-go="livestock" class="ghost">Track Coral/Fish</button>
         </div>
       </div>
 
       <div class="status-grid">
-        <article class="mini-card blue">
+        <article class="mini-card">
           <span>Tracking</span>
           <strong>Water tests</strong>
-          <p>Log your core reef readings to begin guidance.</p>
+          <p>Log core reef readings to begin guidance.</p>
         </article>
-        <article class="mini-card green">
+        <article class="mini-card">
           <span>Ready</span>
-          <strong>Cycle Journey</strong>
-          <p>Follow a simple path for reef maturity.</p>
+          <strong>AquoraX Cam</strong>
+          <p>Take photos and compare growth over time.</p>
         </article>
       </div>
-
-      <article class="card">
-        <h3>What should I do next?</h3>
-        <p>Start by logging your latest water test. AquoraX will then show simple guidance for what may need reviewing.</p>
-      </article>
 
       <article class="assistant-card">
         <div>
@@ -58,8 +53,8 @@
     <section id="livestock" class="page">
       <div class="section-head">
         <p class="eyebrow">Livestock Tracker</p>
-        <h2>Coral & Fish Journal</h2>
-        <p>Track photos, growth, condition and notes without making it feel complicated.</p>
+        <h2>AquoraX Cam</h2>
+        <p>Take photos, upload from gallery, compare growth and build a clean visual reef journal.</p>
       </div>
 
       <div class="tabs">
@@ -69,35 +64,63 @@
 
       <div id="corals" class="tab-panel active">
         <article class="tracker-card">
-          <div class="photo-box">
-            <span>AquoraX Cam</span>
-          </div>
-          <h3>Coral Growth Tracker</h3>
-          <p>Take a new photo or upload from your gallery, then compare growth over time.</p>
+          <p class="eyebrow">Coral Growth</p>
+          <h3>Coral Photo Journal</h3>
+          <p>Take a fresh coral photo or upload one from your gallery. Add a previous photo to compare growth.</p>
+
           <div class="button-row">
-            <label class="upload-btn">Upload Photo<input type="file" accept="image/*" hidden /></label>
-            <label class="upload-btn">AquoraX Cam<input type="file" accept="image/*" capture="environment" hidden /></label>
+            <label class="upload-btn primary">Take Photo<input class="photo-input" data-target="coral-current" type="file" accept="image/*" capture="environment" hidden></label>
+            <label class="upload-btn">Upload Gallery<input class="photo-input" data-target="coral-current" type="file" accept="image/*" hidden></label>
+            <label class="upload-btn ghost-btn">Add Before Photo<input class="photo-input" data-target="coral-before" type="file" accept="image/*" hidden></label>
           </div>
-          <label class="range-label">Growth comparison</label>
-          <input type="range" min="0" max="100" value="45" />
-          <textarea placeholder="Add coral notes..."></textarea>
+
+          <div class="image-stack">
+            <img id="coral-before" class="before-img" alt="">
+            <img id="coral-current" class="current-img" alt="">
+            <div class="empty-preview">Add coral photos to preview growth</div>
+          </div>
+
+          <label class="range-label">Growth comparison slider</label>
+          <input class="compare-range" data-current="coral-current" type="range" min="0" max="100" value="50">
+
+          <div class="timeline">
+            <div class="timeline-item active"><span></span><div><strong>First photo</strong><p>Add your starting reference.</p></div></div>
+            <div class="timeline-item"><span></span><div><strong>Latest photo</strong><p>Track visible changes.</p></div></div>
+            <div class="timeline-item"><span></span><div><strong>Notes</strong><p>Record placement, flow and colour.</p></div></div>
+          </div>
+
+          <textarea placeholder="Add coral notes, placement, colour, flow or changes..."></textarea>
         </article>
       </div>
 
       <div id="fish" class="tab-panel">
         <article class="tracker-card">
-          <div class="photo-box fish">
-            <span>AquoraX Cam</span>
-          </div>
-          <h3>Fish Health Tracker</h3>
-          <p>Upload photos, track behaviour, feeding and visual condition.</p>
+          <p class="eyebrow">Fish Care</p>
+          <h3>Fish Photo Journal</h3>
+          <p>Track fish condition, behaviour, feeding and visual changes with photos and notes.</p>
+
           <div class="button-row">
-            <label class="upload-btn">Upload Photo<input type="file" accept="image/*" hidden /></label>
-            <label class="upload-btn">AquoraX Cam<input type="file" accept="image/*" capture="environment" hidden /></label>
+            <label class="upload-btn primary">Take Photo<input class="photo-input" data-target="fish-current" type="file" accept="image/*" capture="environment" hidden></label>
+            <label class="upload-btn">Upload Gallery<input class="photo-input" data-target="fish-current" type="file" accept="image/*" hidden></label>
+            <label class="upload-btn ghost-btn">Add Before Photo<input class="photo-input" data-target="fish-before" type="file" accept="image/*" hidden></label>
           </div>
-          <label class="range-label">Condition / confidence</label>
-          <input type="range" min="0" max="100" value="75" />
-          <textarea placeholder="Add fish notes..."></textarea>
+
+          <div class="image-stack">
+            <img id="fish-before" class="before-img" alt="">
+            <img id="fish-current" class="current-img" alt="">
+            <div class="empty-preview">Add fish photos to preview condition</div>
+          </div>
+
+          <label class="range-label">Condition comparison slider</label>
+          <input class="compare-range" data-current="fish-current" type="range" min="0" max="100" value="50">
+
+          <div class="timeline">
+            <div class="timeline-item active"><span></span><div><strong>Photo check</strong><p>Keep a visual record.</p></div></div>
+            <div class="timeline-item"><span></span><div><strong>Feeding notes</strong><p>Record appetite and behaviour.</p></div></div>
+            <div class="timeline-item"><span></span><div><strong>Review</strong><p>Watch changes calmly.</p></div></div>
+          </div>
+
+          <textarea placeholder="Add fish notes, feeding, behaviour or condition changes..."></textarea>
         </article>
       </div>
     </section>
@@ -108,17 +131,14 @@
         <h2>Simple reef progression</h2>
         <p>Follow your reef’s maturity with calm, beginner-safe guidance.</p>
       </div>
-      <article class="card">
-        <h3>Current stage</h3>
-        <p>No cycle data logged yet. Add your first ammonia, nitrite and nitrate results to begin.</p>
-      </article>
+      <article class="card"><h3>Current stage</h3><p>No cycle data logged yet. Add your first ammonia, nitrite and nitrate results to begin.</p></article>
     </section>
 
     <section id="tests" class="page">
       <div class="section-head">
         <p class="eyebrow">Water Tests</p>
         <h2>Core reef parameters</h2>
-        <p>Beginner mode keeps this simple and focuses on the readings that matter most.</p>
+        <p>Beginner mode focuses on the readings that matter most.</p>
       </div>
       <div class="param-grid">
         <div class="param">Salinity <span>No data</span></div>
@@ -136,11 +156,7 @@
         <h2>Beginner preferences</h2>
         <p>Mode switching, customisation and account tools will live here in the real app.</p>
       </div>
-      <article class="card">
-        <h3>Experience Mode</h3>
-        <p>Beginner mode is simplified. Experienced mode will become the advanced reef OS.</p>
-        <button>Switch to Experienced</button>
-      </article>
+      <article class="card"><h3>Experience Mode</h3><p>Beginner mode is simplified. Experienced mode will become the advanced reef OS.</p><button>Switch to Experienced</button></article>
     </section>
   </main>
 
