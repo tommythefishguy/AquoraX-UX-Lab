@@ -339,3 +339,62 @@
     max-height:145px;
   }
 }
+
+
+/* FINAL partner banner fix */
+.partner-strip{
+  width:100%;
+  max-width:100%;
+  margin:18px auto;
+  border-radius:28px;
+  overflow:hidden;
+  background:transparent;
+  border:1px solid rgba(80,220,255,.15);
+}
+
+.partner-strip img{
+  width:100%;
+  height:auto !important;
+  max-height:none !important;
+  display:block;
+  object-fit:contain !important;
+  object-position:center center !important;
+}
+
+/* Livestock cleaner spacing */
+#livestockView .livestock-partner-branded{
+  padding:18px;
+  gap:16px;
+}
+
+#livestockView .partner-copy{
+  padding-top:4px;
+}
+
+/* Care section fix */
+#careView .care-hero{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+#careView .partner-strip{
+  margin-top:10px;
+}
+
+/* Remove all previous forced crop rules */
+.partner-strip-aquatics img,
+.partner-strip-filters img,
+.partner-art,
+.partner-art-aquatics,
+.partner-art-filters{
+  max-height:none !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+
+@media(max-width:640px){
+  .partner-strip{
+    border-radius:22px;
+  }
+}
