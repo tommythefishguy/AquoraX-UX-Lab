@@ -344,7 +344,7 @@ bindBeginnerNav();
 renderReefTests();
 
 // AquoraX Beginner Livestock tracker
-const LIVESTOCK_STORE_KEY = 'aquoraxBeginnerLivestockV1';
+const LIVESTOCK_STORE_KEY = 'aquoraxBeginnerLivestockV2';
 let livestockState = loadLivestockState();
 let livestockFilter = 'all';
 let pendingPhotoData = '';
@@ -352,7 +352,15 @@ let pendingPhotoData = '';
 function loadLivestockState(){
   try{
     const saved = JSON.parse(localStorage.getItem(LIVESTOCK_STORE_KEY));
-    return saved && typeof saved === 'object' ? { items: [], ...saved } : { items: [] };
+    if(saved && typeof saved === 'object') return { items: [], ...saved };
+    const old = JSON.parse(localStorage.getItem('aquoraxBeginnerLivestockV1'));
+    if(old && old.items){
+      return { items: old.items.map(item => ({
+        ...item,
+        photos: item.photos || (item.photo ? [{ id:`${item.id || Date.now()}-first`, date:item.date || new Date().toISOString(), src:item.photo, note:'First photo' }] : [])
+      })) };
+    }
+    return { items: [] };
   } catch { return { items: [] }; }
 }
 function saveLivestockState(){ localStorage.setItem(LIVESTOCK_STORE_KEY, JSON.stringify(livestockState)); }
@@ -366,43 +374,104 @@ function readPhoto(file){
   });
 }
 function lifeTypeLabel(type){ return type === 'fish' ? 'Fish' : 'Coral'; }
-function lifeScoreLabel(score){
-  const n = Number(score || 5);
-  if(n <= 3) return 'Review';
-  if(n <= 6) return 'Watch';
-  return 'Healthy';
+function latestPhoto(item){
+  const photos = item.photos || [];
+  return photos.length ? photos[photos.length - 1].src : (item.photo || '');
+}
+function firstPhoto(item){
+  const photos = item.photos || [];
+  return photos.length ? photos[0].src : (item.photo || '');
+}
+function lifeStatus(item){
+  const photos = item.photos || [];
+  if(photos.length >= 3) return 'Tracking';
+  if(photos.length >= 2) return 'Compare ready';
+  return 'First photo saved';
+}
+function renderPhotoCompare(item){
+  const first = firstPhoto(item);
+  const latest = latestPhoto(item);
+  const photos = item.photos || [];
+  if(!first){
+    return `<div class="life-image"><div class="life-placeholder">${item.type === 'fish' ? '🐟' : '🪸'}</div></div>`;
+  }
+  if(photos.length < 2){
+    return `<div class="life-image"><img src="${first}" alt="${escapeHtml(item.name)} first photo" /></div>`;
+  }
+  return `<div class="compare-wrap" data-compare-id="${item.id}">
+    <div class="compare-stage">
+      <img class="compare-before" src="${first}" alt="${escapeHtml(item.name)} first photo" />
+      <img class="compare-after" src="${latest}" alt="${escapeHtml(item.name)} latest photo" style="clip-path: inset(0 0 0 50%);" />
+      <div class="compare-line" style="left:50%"></div>
+      <span class="compare-tag first">First</span><span class="compare-tag latest">Latest</span>
+    </div>
+    <input class="growth-compare-slider" data-compare-slider="${item.id}" type="range" min="0" max="100" value="50" aria-label="Slide between first and latest growth photo" />
+  </div>`;
+}
+function renderTimeline(item){
+  const photos = item.photos || [];
+  if(!photos.length) return '<div class="growth-timeline empty">No photos yet.</div>';
+  return `<div class="growth-timeline">${photos.map((photo, index) => `<button class="growth-thumb" data-photo-index="${index}" data-item-id="${item.id}" type="button" title="${index === 0 ? 'First photo' : 'Growth photo'}"><img src="${photo.src}" alt="Growth photo ${index + 1}" /><span>${index + 1}</span></button>`).join('')}</div>`;
 }
 function renderLivestock(){
   const grid = $('livestockGrid');
   if(!grid) return;
   const items = livestockState.items.filter(item => livestockFilter === 'all' || item.type === livestockFilter);
   if(!items.length){
-    grid.innerHTML = '<div class="history-empty livestock-empty">No livestock saved yet. Add your first coral or fish to start the timeline.</div>';
+    grid.innerHTML = '<div class="history-empty livestock-empty">No livestock saved yet. Add your first coral or fish, then add growth photos over time.</div>';
     return;
   }
   grid.innerHTML = items.map(item => {
-    const status = lifeScoreLabel(item.score);
-    const tone = status === 'Healthy' ? 'good' : status === 'Watch' ? 'watch' : 'review';
-    const img = item.photo ? `<img src="${item.photo}" alt="${escapeHtml(item.name)} photo" />` : `<div class="life-placeholder">${item.type === 'fish' ? '🐟' : '🪸'}</div>`;
-    return `<article class="life-card ${tone}">
-      <div class="life-image">${img}</div>
+    const photos = item.photos || [];
+    const status = lifeStatus(item);
+    return `<article class="life-card growth-card">
+      ${renderPhotoCompare(item)}
       <div class="life-content">
         <div class="life-top"><span>${lifeTypeLabel(item.type)}</span><button class="life-delete" data-id="${item.id}" type="button" aria-label="Delete ${escapeHtml(item.name)}">×</button></div>
         <h3>${escapeHtml(item.name)}</h3>
         <p class="life-location">${escapeHtml(item.location || 'Location not set')}</p>
-        <div class="life-meter"><span style="width:${Number(item.score) * 10}%"></span></div>
-        <div class="life-status"><strong>${status}</strong><small>${Number(item.score)}/10 growth / condition</small></div>
+        <div class="life-status"><strong>${status}</strong><small>${photos.length} photo${photos.length === 1 ? '' : 's'} saved</small></div>
+        ${renderTimeline(item)}
+        <button class="btn ghost wide add-growth-photo" data-id="${item.id}" type="button">Add growth photo</button>
         <p class="life-note">${escapeHtml(item.notes || 'No notes yet.')}</p>
-        <small class="life-date">Saved ${formatDate(item.date)}</small>
+        <small class="life-date">Started ${formatDate(item.date)}</small>
       </div>
     </article>`;
   }).join('');
+
   grid.querySelectorAll('.life-delete').forEach(btn => btn.addEventListener('click', () => {
     if(!confirm('Remove this livestock entry?')) return;
     livestockState.items = livestockState.items.filter(item => item.id !== btn.dataset.id);
     saveLivestockState();
     renderLivestock();
   }));
+
+  grid.querySelectorAll('.add-growth-photo').forEach(btn => btn.addEventListener('click', () => addGrowthPhoto(btn.dataset.id)));
+
+  grid.querySelectorAll('[data-compare-slider]').forEach(slider => slider.addEventListener('input', () => {
+    const wrap = slider.closest('.compare-wrap');
+    const after = wrap.querySelector('.compare-after');
+    const line = wrap.querySelector('.compare-line');
+    after.style.clipPath = `inset(0 0 0 ${slider.value}%)`;
+    line.style.left = `${slider.value}%`;
+  }));
+}
+async function addGrowthPhoto(id){
+  const item = livestockState.items.find(x => x.id === id);
+  if(!item) return;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = async () => {
+    const src = await readPhoto(input.files && input.files[0]);
+    if(!src) return;
+    item.photos = item.photos || [];
+    item.photos.push({ id:`${Date.now()}-${Math.random().toString(16).slice(2)}`, date:new Date().toISOString(), src, note:'Growth photo' });
+    item.photo = src;
+    saveLivestockState();
+    renderLivestock();
+  };
+  input.click();
 }
 function escapeHtml(value){
   return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
@@ -410,16 +479,17 @@ function escapeHtml(value){
 function bindLivestock(){
   const focus = $('livestockFocusBtn');
   if(focus) focus.addEventListener('click', () => $('livestockEntry').scrollIntoView({ behavior:'smooth', block:'start' }));
-  const score = $('lifeScore');
-  if(score) score.addEventListener('input', () => { $('lifeScoreText').textContent = `${score.value} / 10`; });
   const type = $('lifeType');
-  if(type) type.addEventListener('change', () => { $('lifeSliderLabel').textContent = type.value === 'fish' ? 'Condition / confidence' : 'Growth / condition'; });
+  if(type) type.addEventListener('change', () => {
+    const title = document.querySelector('.growth-explainer strong');
+    if(title) title.textContent = type.value === 'fish' ? 'Condition compare' : 'Growth compare';
+  });
   const photo = $('lifePhoto');
   if(photo) photo.addEventListener('change', async () => {
     pendingPhotoData = await readPhoto(photo.files && photo.files[0]);
     const preview = $('photoPreview');
     if(pendingPhotoData) preview.innerHTML = `<img src="${pendingPhotoData}" alt="Selected livestock preview" />`;
-    else preview.textContent = 'Photo preview appears here';
+    else preview.textContent = 'First photo preview appears here';
   });
   document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
     livestockFilter = btn.dataset.filter;
@@ -433,25 +503,24 @@ function bindLivestock(){
       const name = $('lifeName').value.trim();
       if(!name){ $('lifeSaveMsg').textContent = 'Add a name first.'; return; }
       if(!pendingPhotoData && $('lifePhoto').files && $('lifePhoto').files[0]) pendingPhotoData = await readPhoto($('lifePhoto').files[0]);
+      const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      const photos = pendingPhotoData ? [{ id:`${id}-first`, date:new Date().toISOString(), src:pendingPhotoData, note:'First photo' }] : [];
       const item = {
-        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        id,
         date: new Date().toISOString(),
         type: $('lifeType').value,
         name,
         location: $('lifeLocation').value.trim(),
-        score: Number($('lifeScore').value || 5),
         notes: $('lifeNotes').value.trim(),
-        photo: pendingPhotoData
+        photo: pendingPhotoData,
+        photos
       };
       livestockState.items.unshift(item);
       livestockState.items = livestockState.items.slice(0, 60);
       saveLivestockState();
       form.reset();
       pendingPhotoData = '';
-      $('lifeScore').value = 5;
-      $('lifeScoreText').textContent = '5 / 10';
-      $('lifeSliderLabel').textContent = 'Growth / condition';
-      $('photoPreview').textContent = 'Photo preview appears here';
+      $('photoPreview').textContent = 'First photo preview appears here';
       $('lifeSaveMsg').textContent = 'Livestock saved ✓';
       renderLivestock();
       setTimeout(() => $('lifeSaveMsg').textContent = '', 2400);

@@ -266,24 +266,20 @@
           <label>Location
             <input id="lifeLocation" type="text" placeholder="e.g. Left rock / top shelf" />
           </label>
-          <label>Photo
+          <label>First photo
             <input id="lifePhoto" type="file" accept="image/*" />
           </label>
 
-          <div class="slider-wrap">
-            <div>
-              <p class="label" id="lifeSliderLabel">Growth / condition</p>
-              <strong id="lifeScoreText">5 / 10</strong>
-              <small>Use this as a simple visual check, not a perfect measurement.</small>
-            </div>
-            <input id="lifeScore" type="range" min="1" max="10" value="5" />
+          <div class="growth-explainer">
+            <strong>Growth compare</strong>
+            <small>Add the first photo now. Each livestock card lets you add more growth photos later, then slide between the first and latest image to see real change.</small>
           </div>
 
           <label class="wide-field">Notes / journal
             <textarea id="lifeNotes" rows="4" placeholder="What changed? Extension, colour, feeding, behaviour, placement, confidence..."></textarea>
           </label>
 
-          <div class="photo-preview" id="photoPreview">Photo preview appears here</div>
+          <div class="photo-preview" id="photoPreview">First photo preview appears here</div>
           <button class="btn primary submit" type="submit">Save livestock</button>
           <p id="lifeSaveMsg" class="save-msg" aria-live="polite"></p>
         </form>
