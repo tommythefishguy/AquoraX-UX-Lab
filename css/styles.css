@@ -257,3 +257,85 @@
     border-radius:22px;
   }
 }
+
+
+/* Premium partner logo layout fix */
+.partner-strip{
+  width:100%;
+  max-width:720px;
+  margin:0 auto 18px auto;
+  border-radius:26px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(71,225,255,.16), transparent 36%),
+    radial-gradient(circle at 90% 20%, rgba(183,82,255,.12), transparent 34%),
+    rgba(1,8,18,.82);
+  border:1px solid rgba(76,226,255,.18);
+  box-shadow:0 18px 50px rgba(0,0,0,.28), inset 0 0 36px rgba(76,226,255,.05);
+}
+.partner-strip img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:210px;
+  object-fit:cover;
+  object-position:center;
+}
+.partner-strip-aquatics{
+  max-width:680px;
+}
+.partner-strip-aquatics img{
+  max-height:190px;
+}
+.partner-strip-filters{
+  max-width:760px;
+  margin-top:18px;
+}
+.partner-strip-filters img{
+  max-height:210px;
+}
+
+/* Stop old injected image rules from forcing bad sizing */
+.partner-art-wrap,
+#careView .finest-filters-lockup.partner-art-wrap{
+  border:none !important;
+  background:transparent !important;
+  box-shadow:none !important;
+}
+
+/* Better spacing after partner banners */
+#livestockView .livestock-partner-branded{
+  padding:22px !important;
+}
+#livestockView .livestock-partner-branded .partner-copy{
+  margin-top:2px;
+}
+#careView .care-hero{
+  gap:18px;
+  align-items:center;
+}
+#careView .care-hero .partner-strip{
+  margin-bottom:0;
+}
+#careView .care-system-card,
+#careView .care-task-card,
+#careView .panel{
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+
+@media(max-width:640px){
+  .partner-strip{
+    border-radius:20px;
+    max-width:100%;
+  }
+  .partner-strip img{
+    max-height:150px;
+  }
+  .partner-strip-aquatics img{
+    max-height:140px;
+  }
+  .partner-strip-filters img{
+    max-height:145px;
+  }
+}
