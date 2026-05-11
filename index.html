@@ -194,11 +194,15 @@
 
       <section class="tests-entry panel">
         <form class="reef-test-form" id="reefTestForm">
-          <div class="form-title">
+          <div class="form-title tests-form-head">
             <div><p class="eyebrow">Tests</p><h3>Log today’s reef readings</h3></div>
+            <div class="unit-switches" aria-label="Test unit preferences">
+              <label>Temp unit<select id="tempUnit"><option value="c">°C</option><option value="f">°F</option></select></label>
+              <label>Salinity unit<select id="salinityUnit"><option value="ppt">ppt</option><option value="sg">SG</option></select></label>
+            </div>
           </div>
-          <label>Temperature <small>°C</small><input id="temp" type="number" inputmode="decimal" step="0.1" placeholder="25.0" /></label>
-          <label>Salinity <small>ppt</small><input id="salinity" type="number" inputmode="decimal" step="0.1" placeholder="35.0" /></label>
+          <label>Temperature <small id="tempUnitLabel">°C</small><input id="temp" type="number" inputmode="decimal" step="0.1" placeholder="25.0" /></label>
+          <label>Salinity <small id="salinityUnitLabel">ppt</small><input id="salinity" type="number" inputmode="decimal" step="0.001" placeholder="35.0" /></label>
           <label>pH <small>optional</small><input id="testPh" type="number" inputmode="decimal" step="0.01" placeholder="8.10" /></label>
           <label>Alkalinity <small>dKH</small><input id="alk" type="number" inputmode="decimal" step="0.1" placeholder="8.0" /></label>
           <label>Nitrate <small>NO₃</small><input id="testNitrate" type="number" inputmode="decimal" step="0.1" placeholder="10" /></label>

@@ -196,8 +196,8 @@ let reefState = loadReefState();
 function loadReefState(){
   try{
     const saved = JSON.parse(localStorage.getItem(REEF_STORE_KEY));
-    return saved && typeof saved === 'object' ? { reefTests: [], ...saved } : { reefTests: [] };
-  } catch { return { reefTests: [] }; }
+    return saved && typeof saved === 'object' ? { reefTests: [], tempUnit:'c', salinityUnit:'ppt', ...saved } : { reefTests: [], tempUnit:'c', salinityUnit:'ppt' };
+  } catch { return { reefTests: [], tempUnit:'c', salinityUnit:'ppt' }; }
 }
 function saveReefState(){ localStorage.setItem(REEF_STORE_KEY, JSON.stringify(reefState)); }
 function latestReef(){ return reefState.reefTests[0] || null; }
@@ -223,11 +223,39 @@ function statusFor(value, def){
   if(value >= def.watch[0] && value <= def.watch[1]) return { label:'Watch', tone:'watch', note:'Near range. Review trend before changing anything.' };
   return { label:'Review', tone:'review', note:'Outside comfort range. Re-test and review stability.' };
 }
+function cToF(c){ return (Number(c) * 9 / 5) + 32; }
+function fToC(f){ return (Number(f) - 32) * 5 / 9; }
+function pptToSg(ppt){ return 1 + (Number(ppt) * 0.000756); }
+function sgToPpt(sg){ return (Number(sg) - 1) / 0.000756; }
+function cleanNumber(value, dp){
+  const fixed = Number(value).toFixed(dp);
+  return fixed.replace(/\.0$|\.00$/, '');
+}
 function displayValue(value, def){
-  if(value === null || value === undefined) return '—';
-  return `${Number(value).toFixed(def.dp).replace(/\.0$|\.00$/, '')}${def.unit ? ' ' + def.unit : ''}`;
+  if(value === null || value === undefined || Number.isNaN(Number(value))) return '—';
+  if(def.key === 'temp' && reefState.tempUnit === 'f') return `${cleanNumber(cToF(value), 1)} °F`;
+  if(def.key === 'salinity' && reefState.salinityUnit === 'sg') return `${Number(pptToSg(value)).toFixed(3)} SG`;
+  return `${cleanNumber(value, def.dp)}${def.unit ? ' ' + def.unit : ''}`;
+}
+function updateUnitUI(){
+  const tempUnit = $('tempUnit');
+  const salinityUnit = $('salinityUnit');
+  if(tempUnit) tempUnit.value = reefState.tempUnit || 'c';
+  if(salinityUnit) salinityUnit.value = reefState.salinityUnit || 'ppt';
+  const tempLabel = $('tempUnitLabel');
+  const salinityLabel = $('salinityUnitLabel');
+  if(tempLabel) tempLabel.textContent = reefState.tempUnit === 'f' ? '°F' : '°C';
+  if(salinityLabel) salinityLabel.textContent = reefState.salinityUnit === 'sg' ? 'SG' : 'ppt';
+  const tempInput = $('temp');
+  const salinityInput = $('salinity');
+  if(tempInput) tempInput.placeholder = reefState.tempUnit === 'f' ? '77.0' : '25.0';
+  if(salinityInput){
+    salinityInput.placeholder = reefState.salinityUnit === 'sg' ? '1.026' : '35.0';
+    salinityInput.step = reefState.salinityUnit === 'sg' ? '0.001' : '0.1';
+  }
 }
 function renderReefTests(){
+  updateUnitUI();
   const test = latestReef();
   const grid = $('paramGrid');
   if(grid){
@@ -264,14 +292,18 @@ function bindBeginnerNav(){
   document.querySelectorAll('.nav-btn').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.target)));
   const testsFocus = $('testsFocusBtn');
   if(testsFocus) testsFocus.addEventListener('click', () => $('reefTestForm').scrollIntoView({ behavior:'smooth', block:'center' }));
+  const tempUnit = $('tempUnit');
+  if(tempUnit) tempUnit.addEventListener('change', () => { reefState.tempUnit = tempUnit.value; saveReefState(); updateUnitUI(); renderReefTests(); });
+  const salinityUnit = $('salinityUnit');
+  if(salinityUnit) salinityUnit.addEventListener('change', () => { reefState.salinityUnit = salinityUnit.value; saveReefState(); updateUnitUI(); renderReefTests(); });
   const reefForm = $('reefTestForm');
   if(reefForm){
     reefForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const test = {
         date: new Date().toISOString(),
-        temp: num($('temp').value),
-        salinity: num($('salinity').value),
+        temp: $('temp').value === '' ? null : (reefState.tempUnit === 'f' ? fToC(num($('temp').value)) : num($('temp').value)),
+        salinity: $('salinity').value === '' ? null : (reefState.salinityUnit === 'sg' ? sgToPpt(num($('salinity').value)) : num($('salinity').value)),
         ph: num($('testPh').value),
         alk: num($('alk').value),
         nitrate: num($('testNitrate').value),
