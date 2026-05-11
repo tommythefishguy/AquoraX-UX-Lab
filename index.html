@@ -3,114 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AquoraX UX Lab - Blue Shark Journey</title>
+  <title>AquoraX UX Lab - Beginner Mode</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <div class="reef-bg"></div>
   <aside class="side-rail">
     <div class="brand">
-      <div class="fin"></div>
-      <b>AquoraX</b>
-      <small>Cycle Journey</small>
+      <img src="assets/aquorax-logo.png" alt="AquoraX" />
+      <small>UX Lab · Beginner Mode</small>
     </div>
     <button class="side-item" data-page="home">Home</button>
     <button class="side-item" data-page="livestock">Livestock</button>
     <button class="side-item" data-page="cam">AquoraX Cam</button>
     <button class="side-item active" data-page="journey">Journey</button>
+    <button class="side-item" data-page="tests">Tests</button>
     <button class="side-item" data-page="ask">Ask AquoraX</button>
+    <button class="side-item" data-page="settings">Settings</button>
   </aside>
 
   <main class="app-shell">
     <section id="journey" class="page active">
-      <header class="hero">
+      <header class="journey-hero glass">
         <button class="about">About the Blue Shark Cycle ⓘ</button>
-        <div class="hero-inner">
-          <div class="hero-fin"></div>
-          <h1>AQUORA<span>X</span></h1>
-          <p class="cycle">Cycle Journey</p>
-          <p class="partner">Partnered with <strong>Blue Shark Trading Co</strong></p>
-          <h2>Build a strong foundation. Grow a thriving reef.</h2>
-          <p class="sub">Follow the Blue Shark Cycle with AquoraX monitoring your progress every step of the way.</p>
+        <img class="hero-lockup" src="assets/aquorax-blue-shark-hero.png" alt="AquoraX Cycle Journey partnered with Blue Shark Trading Co" />
+        <div class="hero-copy">
+          <p class="eyebrow">Official Beginner Cycle Journey</p>
+          <h1>Build a strong foundation. Grow a thriving reef.</h1>
+          <p>Follow the Blue Shark Cycle with AquoraX keeping the experience simple, calm and easy to understand.</p>
         </div>
       </header>
 
-      <section class="cycle-panel">
-        <h3>The Blue Shark Cycle</h3>
+      <section class="cycle-panel glass">
+        <div class="section-head">
+          <p class="eyebrow">The Blue Shark Cycle</p>
+          <h2>Your reef foundation, step by step.</h2>
+        </div>
+        <div class="timeline-line"></div>
         <div class="cycle-grid">
-          <article class="stage active"><i>1</i><span>Stage 1</span><b>Start & Stabilise</b><small>Days 1-14</small><p>Build your foundation and stabilise parameters.</p></article>
-          <article class="stage"><i>2</i><span>Stage 2</span><b>Biological Growth</b><small>Weeks 2-6</small><p>Encourage beneficial bacteria and biofilm.</p></article>
-          <article class="stage"><i>3</i><span>Stage 3</span><b>Stabilisation</b><small>Weeks 6-12</small><p>Reef stabilises and coral introductions begin.</p></article>
-          <article class="stage"><i>4</i><span>Stage 4</span><b>Reef Maturity</b><small>Months 3+</small><p>Grow colour, confidence and long term success.</p></article>
+          <article class="stage active"><i>1</i><span>Stage 1</span><b>Start & Stabilise</b><small>Days 1-14</small><p>Begin the biological foundation and watch core water signals.</p></article>
+          <article class="stage"><i>2</i><span>Stage 2</span><b>Biological Growth</b><small>Weeks 2-6</small><p>Support beneficial bacteria while the tank starts to settle.</p></article>
+          <article class="stage"><i>3</i><span>Stage 3</span><b>Stabilisation</b><small>Weeks 6-12</small><p>Look for stable patterns before adding more sensitive livestock.</p></article>
+          <article class="stage"><i>4</i><span>Stage 4</span><b>Reef Maturity</b><small>Months 3+</small><p>Build confidence, colour and long term rhythm.</p></article>
         </div>
       </section>
 
-      <section class="product-grid">
-        <article class="product colony">
-          <div class="bottle">COLONY</div>
-          <div>
-            <p class="label">Powered by</p>
-            <h3>COLONY</h3>
-            <p class="type">Biodynamic bacteria</p>
-            <ul><li>Kickstarts biological filtration</li><li>Supports coral & fish health</li><li>Reduces nuisance algae</li><li>Creates a balanced reef system</li></ul>
-            <a href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Learn More About Colony →</a>
+      <section class="systems-grid">
+        <article class="system-card colony-card glass">
+          <div class="product-media"><img src="assets/colony-paradigm.jpg" alt="Blue Shark Colony and Paradigm products" /></div>
+          <div class="product-copy">
+            <p class="eyebrow">Powered by Colony</p>
+            <h2>Rapid Cycle Support</h2>
+            <p class="soft">Colony helps support the biological foundation of a new reef by introducing nitrifying bacteria.</p>
+            <div class="safe-list"><span>Foundation support</span><span>Beginner friendly</span><span>Cycle guidance</span></div>
+            <div class="actions"><a href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Watch Colony Guide</a><a class="ghost" href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener">Rapid Cycle Overview</a></div>
           </div>
         </article>
 
-        <article class="product paradigm">
-          <div class="bottle">PARADIGM</div>
-          <div>
-            <p class="label purple">Protected by</p>
-            <h3>PARADIGM</h3>
-            <p class="type purple">Aquarium protector</p>
-            <ul><li>Detoxifies harmful substances</li><li>Supports immune response</li><li>Promotes coral resilience</li><li>Ideal for new & established tanks</li></ul>
-            <a href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Learn More About Paradigm →</a>
+        <article class="system-card paradigm-card glass">
+          <div class="product-media"><img src="assets/colony-paradigm.jpg" alt="Blue Shark Paradigm and Colony products" /></div>
+          <div class="product-copy">
+            <p class="eyebrow purple">Protected by Paradigm</p>
+            <h2>Aquarium Protection</h2>
+            <p class="soft">Paradigm is presented as a supportive protection step, helping beginners focus on stability and observation.</p>
+            <div class="safe-list purple-list"><span>Watch calmly</span><span>Support stability</span><span>Reef confidence</span></div>
+            <div class="actions"><a class="purple-btn" href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Watch Paradigm Guides</a><a class="ghost" href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">Blue Shark Channel</a></div>
           </div>
         </article>
       </section>
 
-      <section class="lower-grid">
-        <article class="partner-card">
-          <div class="waves">≋</div>
-          <p class="label">Official Partner</p>
-          <h3>Finest Aquatics</h3>
-          <p class="muted">Your trusted source for authentic Blue Shark products.</p>
-          <div class="benefits"><span>100% Authentic</span><span>Expert Support</span><span>Fast Delivery</span></div>
-          <a class="cta" href="https://finestaquatics.co.uk/search?q=atm" target="_blank" rel="noopener">Shop Blue Shark Products ↗</a>
-        </article>
+      <section class="partner-strip glass">
+        <div>
+          <p class="eyebrow">Official Retail Partner</p>
+          <img class="finest-logo" src="assets/finest-aquatics-logo.png" alt="Finest Aquatics" />
+          <p class="soft">Shop authentic Blue Shark / ATM cycle products through Finest Aquatics.</p>
+        </div>
+        <a class="big-cta" href="https://finestaquatics.co.uk/search?q=atm" target="_blank" rel="noopener">Shop Blue Shark Products ↗</a>
+      </section>
 
-        <article class="youtube-card">
-          <p class="label">Learn. Watch. Succeed.</p>
-          <h3>Blue Shark YouTube <em>▶</em></h3>
-          <div class="videos">
-            <a href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener"><div>▶</div><span>Rapid Cycle Guide</span></a>
-            <a href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener"><div>▶</div><span>Colony - How It Works</span></a>
-            <a href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener"><div class="purple-thumb">▶</div><span>Paradigm Protection</span></a>
-          </div>
-          <a class="cta red" href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">Visit Blue Shark YouTube Channel ↗</a>
-        </article>
+      <section class="watch-grid">
+        <article class="video-card glass"><span>▶</span><p>Rapid Cycle Guide</p><a href="https://www.youtube.com/watch?v=VRzuKoXSXiU" target="_blank" rel="noopener">Watch now</a></article>
+        <article class="video-card glass"><span>▶</span><p>Colony · How It Works</p><a href="https://www.youtube.com/watch?v=o_MOhjnLAZc" target="_blank" rel="noopener">Watch now</a></article>
+        <article class="video-card glass purple-video"><span>▶</span><p>ATM Products Playlist</p><a href="https://www.youtube.com/playlist?list=PLOjDETUZck9EyqL1WVS17aAOPqUqfeckI" target="_blank" rel="noopener">Open playlist</a></article>
+        <article class="video-card glass"><span>▶</span><p>Blue Shark Channel</p><a href="https://www.youtube.com/@BlueSharkJourney/videos" target="_blank" rel="noopener">Visit channel</a></article>
+      </section>
 
-        <article class="monitor-card">
-          <div class="mini-fin"></div>
-          <h3>AquoraX monitors. You enjoy.</h3>
-          <p class="muted">We track your water, livestock and growth so you can enjoy a healthier, more vibrant reef.</p>
-          <div class="monitor-grid"><span>Water Parameters<small>Track & Trend</small></span><span>Livestock Tracker<small>Growth & Health</small></span><span>AquoraX Cam<small>Monitor & Compare</small></span><span>Smart Guidance<small>AI Reef Assistant</small></span></div>
-          <button>Go to Dashboard →</button>
-        </article>
+      <section class="monitor-panel glass">
+        <div><p class="eyebrow">AquoraX monitors. You enjoy.</p><h2>Simple guidance while your reef finds its rhythm.</h2><p class="soft">Beginner Mode keeps the focus on stability, calm observation and safe next steps.</p></div>
+        <div class="monitor-grid"><span>Water Tests<small>Track simple trends</small></span><span>Livestock<small>Watch coral & fish</small></span><span>AquoraX Cam<small>Before/current compare</small></span><span>Ask AquoraX<small>Calm reef helper</small></span></div>
       </section>
     </section>
 
-    <section id="home" class="page"><div class="simple"><h2>Home</h2><p>Beginner reef overview placeholder.</p></div></section>
-    <section id="livestock" class="page"><div class="simple"><h2>Livestock</h2><p>Coral and fish tracker placeholder.</p></div></section>
-    <section id="cam" class="page"><div class="simple"><h2>AquoraX Cam</h2><p>Photo capture and growth comparison placeholder.</p></div></section>
-    <section id="ask" class="page"><div class="simple"><h2>Ask AquoraX</h2><p>Beginner assistant placeholder.</p></div></section>
+    <section id="home" class="page">
+      <div class="page-hero glass"><p class="eyebrow">Beginner Home</p><h1>Your reef at a glance.</h1><p class="soft">A calm overview of today’s reef, focused on simple signals instead of overwhelming numbers.</p></div>
+      <div class="home-grid">
+        <article class="signal glass"><b>Stability</b><span>Watching</span><p>Keep logging simple water tests to build a clearer picture.</p></article>
+        <article class="signal glass"><b>Cycle</b><span>Stage 1</span><p>Your reef foundation is being built. Look for steady trends.</p></article>
+        <article class="signal glass"><b>Livestock</b><span>Ready</span><p>Add coral and fish records when you are ready to track growth.</p></article>
+      </div>
+    </section>
+
+    <section id="livestock" class="page">
+      <div class="page-hero glass"><p class="eyebrow">Livestock Tracker</p><h1>Coral and fish records, kept simple.</h1><p class="soft">Track what you have, how it looks, and changes over time.</p></div>
+      <div class="tracker-grid">
+        <article class="tracker-card glass"><h2>Coral Tracker</h2><p>Growth, colour, placement and notes.</p><button data-page="cam">Open AquoraX Cam</button></article>
+        <article class="tracker-card glass"><h2>Fish Tracker</h2><p>Behaviour, feeding, condition and journal notes.</p><button data-page="cam">Add Photo</button></article>
+      </div>
+    </section>
+
+    <section id="cam" class="page">
+      <div class="page-hero glass"><p class="eyebrow">AquoraX Cam</p><h1>Before and current photo comparison.</h1><p class="soft">Take a photo on mobile or upload from gallery. Desktop browsers usually open the file picker.</p></div>
+      <div class="cam-grid">
+        <article class="cam-card glass"><h2>Before Photo</h2><input id="beforeInput" type="file" accept="image/*" capture="environment"><label for="beforeInput">Take Photo / Upload</label><div id="beforePreview" class="preview">No photo yet</div></article>
+        <article class="cam-card glass"><h2>Current Photo</h2><input id="currentInput" type="file" accept="image/*" capture="environment"><label for="currentInput">Take Photo / Upload</label><div id="currentPreview" class="preview">No photo yet</div></article>
+      </div>
+      <article class="journal glass"><h2>Growth / condition</h2><input type="range" min="0" max="100" value="55"><textarea placeholder="Add a calm note: colour, extension, behaviour, feeding, placement..."></textarea></article>
+    </section>
+
+    <section id="tests" class="page">
+      <div class="page-hero glass"><p class="eyebrow">Beginner Tests</p><h1>Understand what you test and why it matters.</h1><p class="soft">Beginner Mode explains signals without panic language or dosing pressure.</p></div>
+      <div class="test-grid"><article class="glass"><b>Ammonia</b><p>Important during early cycling. Watch and retest calmly.</p></article><article class="glass"><b>Nitrite</b><p>A cycle signal that helps show biological progress.</p></article><article class="glass"><b>Nitrate</b><p>A trend to monitor as the reef becomes more established.</p></article></div>
+    </section>
+
+    <section id="ask" class="page">
+      <div class="assistant-sheet glass"><p class="eyebrow">Ask AquoraX</p><h1>Your calm reef companion.</h1><p class="soft">Choose a guidance card. AquoraX will help you review, watch and consider next checks.</p><div class="prompt-grid"><button>What should I test today?</button><button>Is my cycle ready?</button><button>How is my coral looking?</button><button>What does stability mean?</button></div><div class="assistant-response">Guidance will stay beginner-safe: review trends, watch behaviour, consider checking recent tests, and focus on stability.</div></div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="page-hero glass"><p class="eyebrow">Settings</p><h1>Mode and experience controls.</h1><p class="soft">UX Lab placeholder for Beginner / Experienced switching before production merge.</p></div>
+    </section>
   </main>
 
   <nav class="bottom-nav">
     <button data-page="home">Home</button>
     <button data-page="livestock">Livestock</button>
-    <button data-page="cam">AquoraX Cam</button>
+    <button data-page="cam">Cam</button>
     <button class="active" data-page="journey">Journey</button>
-    <button data-page="ask">Ask AquoraX</button>
+    <button data-page="ask">Ask</button>
   </nav>
 
   <script src="js/app.js"></script>
