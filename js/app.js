@@ -209,18 +209,32 @@ function setView(view){
 
 const paramDefs = [
   { key:'temp', label:'Temperature', unit:'°C', meaning:'Thermal stability', ideal:[24,26], watch:[23,27], dp:1 },
-  { key:'salinity', label:'Salinity', unit:'ppt', meaning:'Salt balance', ideal:[34,36], watch:[33,37], dp:1 },
+  { key:'salinity', label:'Salinity', unit:'ppt', meaning:'Salt balance', ideal:[34,36], watch:[33,37], dp:1, sgIdeal:[1.024,1.026], sgWatch:[1.023,1.027] },
   { key:'ph', label:'pH', unit:'', meaning:'Daily rhythm', ideal:[8.0,8.4], watch:[7.8,8.5], dp:2 },
   { key:'alk', label:'Alkalinity', unit:'dKH', meaning:'Reef stability', ideal:[7.5,9.5], watch:[7,11], dp:1 },
-  { key:'nitrate', label:'Nitrate', unit:'ppm', meaning:'Nutrient level', ideal:[2,20], watch:[0,40], dp:1 },
-  { key:'phosphate', label:'Phosphate', unit:'ppm', meaning:'Nutrient balance', ideal:[0.03,0.12], watch:[0.01,0.25], dp:2 },
+  { key:'nitrate', label:'Nitrate', unit:'ppm', meaning:'Nutrient level', ideal:[2,15], watch:[0,30], dp:1 },
+  { key:'phosphate', label:'Phosphate', unit:'ppm', meaning:'Nutrient balance', ideal:[0.02,0.08], watch:[0.01,0.15], dp:2 },
   { key:'calcium', label:'Calcium', unit:'ppm', meaning:'Coral building', ideal:[400,450], watch:[380,480], dp:0 },
   { key:'magnesium', label:'Magnesium', unit:'ppm', meaning:'Buffer support', ideal:[1250,1400], watch:[1200,1500], dp:0 }
 ];
 function statusFor(value, def){
   if(value === null || value === undefined) return { label:'Not logged', tone:'empty', note:'Add a reading to start tracking.' };
-  if(value >= def.ideal[0] && value <= def.ideal[1]) return { label:'Stable', tone:'good', note:'Inside beginner-safe target range.' };
-  if(value >= def.watch[0] && value <= def.watch[1]) return { label:'Watch', tone:'watch', note:'Near range. Review trend before changing anything.' };
+
+  let checkValue = value;
+  let ideal = def.ideal;
+  let watch = def.watch;
+
+  // Salinity is stored internally as ppt, but when the user chooses SG the
+  // status should be judged against SG reef targets. This keeps 1.025 SG
+  // correctly marked as Stable instead of Watch.
+  if(def.key === 'salinity' && reefState.salinityUnit === 'sg'){
+    checkValue = pptToSg(value);
+    ideal = def.sgIdeal || [1.024, 1.026];
+    watch = def.sgWatch || [1.023, 1.027];
+  }
+
+  if(checkValue >= ideal[0] && checkValue <= ideal[1]) return { label:'Stable', tone:'good', note:'Inside beginner-safe target range.' };
+  if(checkValue >= watch[0] && checkValue <= watch[1]) return { label:'Watch', tone:'watch', note:'Near range. Review trend before changing anything.' };
   return { label:'Review', tone:'review', note:'Outside comfort range. Re-test and review stability.' };
 }
 function cToF(c){ return (Number(c) * 9 / 5) + 32; }
