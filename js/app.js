@@ -1,203 +1,91 @@
-const STORE_KEY = 'aquorax_ux_clean_home_v2';
-const LEGACY_STORE_KEYS = ['aquorax_ux_clean_home_v1'];
-
-const stages = [
-  { title: 'Foundation', text: 'Begin logging tests and give the cycle time to establish.' },
-  { title: 'Ammonia Watch', text: 'Ammonia activity suggests the cycle is beginning to move.' },
-  { title: 'Nitrite Watch', text: 'Nitrite activity suggests the biological filter is developing.' },
-  { title: 'Stability', text: 'Lower ammonia and nitrite with nitrate present suggests the reef is moving toward stability.' }
-];
-
+const STORE_KEY = 'aquoraxHomeOnlyV1';
 const $ = (id) => document.getElementById(id);
-const defaultState = { tests: [], colonyAt: null, paradigmLogs: [] };
-let state = load();
 
-function load(){
-  const tryKey = (key) => {
-    try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch { return null; }
-  };
-  const saved = tryKey(STORE_KEY) || LEGACY_STORE_KEYS.map(tryKey).find(Boolean) || {};
-  return normalizeState({ ...defaultState, ...saved });
+const stages = {
+  1: { name: 'Foundation', progress: 25, desc: 'Begin logging tests so AquoraX can follow the cycle trend.' },
+  2: { name: 'Ammonia Watch', progress: 50, desc: 'Ammonia activity suggests the cycle is beginning to move.' },
+  3: { name: 'Nitrite Watch', progress: 75, desc: 'Nitrite activity suggests the biological filter is developing.' },
+  4: { name: 'Stability', progress: 100, desc: 'Lower ammonia and nitrite with nitrate present suggests the reef is moving toward stability.' }
+};
+
+let state = loadState();
+
+function loadState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY));
+    return saved && typeof saved === 'object' ? { tests: [], colony: null, paradigm: null, ...saved } : defaultState();
+  } catch { return defaultState(); }
 }
-
-function normalizeState(input){
-  return {
-    tests: Array.isArray(input.tests) ? input.tests.map(normalizeTest).filter(Boolean) : [],
-    colonyAt: input.colonyAt || null,
-    paradigmLogs: Array.isArray(input.paradigmLogs) ? input.paradigmLogs : []
-  };
-}
-
-function normalizeTest(t){
-  if(!t || !t.at) return null;
-  return {
-    at: t.at,
-    ammonia: toNumberOrNull(t.ammonia),
-    nitrite: toNumberOrNull(t.nitrite),
-    nitrate: toNumberOrNull(t.nitrate),
-    ph: toNumberOrNull(t.ph)
-  };
-}
-
-function save(showMessage = false){
-  localStorage.setItem(STORE_KEY, JSON.stringify(state));
-  render();
-  if(showMessage) flashSave();
-}
-
-function flashSave(){
-  const el = $('saveStatus');
-  if(!el) return;
-  el.textContent = 'Saved ✓';
-  el.classList.add('visible');
-  window.clearTimeout(flashSave.timer);
-  flashSave.timer = window.setTimeout(()=> el.classList.remove('visible'), 1800);
-}
-
-function fmtDate(iso){
-  return new Date(iso).toLocaleString([], { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
-}
-
-function toNumberOrNull(v){
+function defaultState(){ return { tests: [], colony: null, paradigm: null }; }
+function saveState(){ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+function num(v){
   if(v === '' || v === null || v === undefined) return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 }
-
-function fieldValue(id){ return toNumberOrNull($(id).value); }
-function val(test, key){ return test && test[key] !== null && test[key] !== undefined ? Number(test[key]) : null; }
+function fmt(n, dp=2){ return n === null || n === undefined ? '—' : Number(n).toFixed(dp).replace(/\.00$/, ''); }
 function latest(){ return state.tests[0] || null; }
-function isShowing(n, threshold = 0){ return n !== null && Number(n) > threshold; }
-function isLow(n, threshold = 0.1){ return n !== null && Number(n) <= threshold; }
-
-function getProgress(test){
-  if(!test) return 0;
-  const ammonia = val(test,'ammonia');
-  const nitrite = val(test,'nitrite');
-  const nitrate = val(test,'nitrate');
-
-  if(isLow(ammonia) && isLow(nitrite) && isShowing(nitrate, 0)) return 100;
-  if(isShowing(nitrite, 0.1)) return 66;
-  if(isShowing(ammonia, 0.1)) return 35;
-  if(ammonia !== null || nitrite !== null || nitrate !== null) return 15;
-  return 0;
+function detectStage(test){
+  if(!test) return 1;
+  const a = test.ammonia ?? 0, ni = test.nitrite ?? 0, na = test.nitrate ?? 0;
+  if(a <= 0.05 && ni <= 0.05 && na > 0) return 4;
+  if(ni > 0.05) return 3;
+  if(a > 0.05) return 2;
+  return 1;
 }
-
-function getStage(test){
-  const p = getProgress(test);
-  if(p >= 100) return 3;
-  if(p >= 66) return 2;
-  if(p >= 35) return 1;
-  return 0;
+function guidance(stage, test){
+  if(!test) return ['Start with a water test. AquoraX will then translate the readings into calm cycle guidance.', 'Use Colony and Paradigm logs to keep the journey clear without overcomplicating the process.'];
+  const items = [];
+  const a = test.ammonia ?? 0, ni = test.nitrite ?? 0, na = test.nitrate ?? 0;
+  if(a > 0.05) items.push('Ammonia is present. Review livestock plans and keep watching the cycle trend.');
+  else items.push('Ammonia is low. Keep watching the pattern across the next tests.');
+  if(ni > 0.05) items.push('Nitrite is showing. This usually means the biological filter is developing, but stability is still building.');
+  else items.push('Nitrite is low. AquoraX will keep checking this alongside ammonia and nitrate.');
+  if(na > 0) items.push('Nitrate is beginning to show. This can be a sign the cycle is moving forward.');
+  else items.push('Nitrate has not been detected yet. Keep logging tests so the trend becomes clearer.');
+  if(stage === 4) items.push('Ammonia and nitrite are low with nitrate present. This suggests the system is moving toward stability.');
+  return items;
 }
-
-function displayReading(v, decimals = 2){
-  if(v === null || v === undefined) return '—';
-  const n = Number(v);
-  if(!Number.isFinite(n)) return '—';
-  return Number.isInteger(n) ? String(n) : String(n).replace(/0+$/,'').replace(/\.$/,'');
-}
-
-function renderStages(stageIndex){
-  $('stageTrack').innerHTML = stages.map((s,i)=>`<div class="stage ${i===stageIndex?'active':''}"><strong>${i+1}. ${s.title}</strong><span>${s.text}</span></div>`).join('');
-}
-
-function renderGuidance(test){
-  const title = $('guidanceTitle'), text = $('guidanceText'), list = $('guidanceList');
-  if(!test){
-    title.textContent = 'Ready for your first test';
-    text.textContent = 'Add ammonia, nitrite, and nitrate readings to start the cycle journey.';
-    list.innerHTML = ['Use the same test kit style where possible.','Log results regularly rather than chasing one number.','AquoraX will keep the wording calm and beginner-safe.'].map(x=>`<div class="guidance-item">${x}</div>`).join('');
-    return;
-  }
-
-  const ammonia = val(test,'ammonia');
-  const nitrite = val(test,'nitrite');
-  const nitrate = val(test,'nitrate');
-  const items=[];
-
-  if(isShowing(ammonia, 0.1)) items.push('Ammonia is present. Keep watching the trend and avoid rushing sensitive livestock plans.');
-  if(isShowing(nitrite, 0.1)) items.push('Nitrite is showing. This usually means the biological filter is developing, but stability is still building.');
-
-  if(nitrate === 0) {
-    items.push('Nitrate is not detected yet. That can be normal early in the cycle, especially while ammonia or nitrite are still changing.');
-  } else if(isShowing(nitrate, 0)) {
-    items.push('Nitrate is beginning to show. AquoraX will watch this alongside ammonia and nitrite before calling the cycle stable.');
-  }
-
-  if(isLow(ammonia) && isLow(nitrite) && isShowing(nitrate, 0)) {
-    items.push('Ammonia and nitrite are low with nitrate present. This suggests the system is moving toward stability.');
-  }
-
-  if(isShowing(nitrate, 40)) items.push('Nitrate is elevated. Consider checking your trend and husbandry routine before making big changes.');
-  if(!items.length) items.push('The reading is logged. Keep watching the trend over the next few tests.');
-
-  title.textContent = stages[getStage(test)].title + ' guidance';
-  text.textContent = 'AquoraX reviews your latest readings and translates them into calm cycle guidance.';
-  list.innerHTML = items.map(x=>`<div class="guidance-item">${x}</div>`).join('');
-}
-
-function renderHistory(){
-  const box = $('testHistory');
-  if(!state.tests.length){
-    box.className='history-list empty';
-    box.textContent='No tests logged yet.';
-    return;
-  }
-  box.className='history-list';
-  box.innerHTML = state.tests.map(t=>`<div class="history-item"><div><strong>${fmtDate(t.at)}</strong><br><small>Cycle test saved</small></div><div class="readings"><span class="chip">NH₃ ${displayReading(t.ammonia)}</span><span class="chip">NO₂ ${displayReading(t.nitrite)}</span><span class="chip">NO₃ ${displayReading(t.nitrate)}</span>${t.ph!==null?`<span class="chip">pH ${displayReading(t.ph)}</span>`:''}</div></div>`).join('');
-}
-
-function renderLatestSummary(test){
-  const el = $('latestSummary');
-  if(!el) return;
-  if(!test){
-    el.innerHTML = '<span>No saved test yet.</span>';
-    return;
-  }
-  el.innerHTML = `<span>Latest saved:</span><strong>NH₃ ${displayReading(test.ammonia)}</strong><strong>NO₂ ${displayReading(test.nitrite)}</strong><strong>NO₃ ${displayReading(test.nitrate)}</strong>${test.ph!==null?`<strong>pH ${displayReading(test.ph)}</strong>`:''}`;
-}
-
 function render(){
   const test = latest();
-  const stageIndex = getStage(test), progress = getProgress(test);
-  renderStages(stageIndex);
-  $('currentStageTitle').textContent = stages[stageIndex].title;
-  $('currentStageText').textContent = stages[stageIndex].text;
-  $('confidenceValue').textContent = `${progress}%`;
-  document.querySelector('.confidence-ring').style.setProperty('--progress', `${progress}%`);
-  $('colonyStatus').textContent = state.colonyAt ? fmtDate(state.colonyAt) : 'Not logged';
-  $('paradigmStatus').textContent = state.paradigmLogs.length ? `${state.paradigmLogs.length} dose${state.paradigmLogs.length===1?'':'s'} logged` : 'Not logged';
-  renderGuidance(test);
+  const stage = detectStage(test);
+  const info = stages[stage];
+  document.querySelectorAll('.stage-card').forEach(card => card.classList.toggle('active', Number(card.dataset.stage) === stage));
+  $('stageName').textContent = info.name;
+  $('stageDesc').textContent = info.desc;
+  $('progressText').textContent = info.progress + '%';
+  document.querySelector('.progress-ring').style.setProperty('--angle', info.progress + '%');
+  $('guidanceTitle').textContent = info.name + ' guidance';
+  $('guidanceList').innerHTML = guidance(stage, test).map(t => `<div class="guidance-item">${t}</div>`).join('');
+  $('colonyStatus').textContent = state.colony ? `Logged ${new Date(state.colony).toLocaleString([], { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })}` : 'Not logged';
+  $('paradigmStatus').textContent = state.paradigm ? `Logged ${new Date(state.paradigm).toLocaleString([], { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })}` : 'Not logged';
   renderHistory();
-  renderLatestSummary(test);
+}
+function renderHistory(){
+  const list = $('historyList');
+  if(!state.tests.length){ list.innerHTML = '<div class="history-empty">No water tests saved yet.</div>'; return; }
+  list.innerHTML = state.tests.map(t => {
+    const d = new Date(t.date);
+    return `<article class="history-item"><div class="history-date">${d.toLocaleString([], { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' })}</div><div class="chips"><span class="chip">NH₃ ${fmt(t.ammonia)}</span><span class="chip">NO₂ ${fmt(t.nitrite)}</span><span class="chip">NO₃ ${fmt(t.nitrate,1)}</span><span class="chip">pH ${fmt(t.ph,2)}</span></div></article>`;
+  }).join('');
 }
 
-$('testForm').addEventListener('submit', (e)=>{
+$('testForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const test = {
-    at:new Date().toISOString(),
-    ammonia: fieldValue('ammonia'),
-    nitrite: fieldValue('nitrite'),
-    nitrate: fieldValue('nitrate'),
-    ph: fieldValue('ph')
-  };
-
-  if(test.ammonia === null && test.nitrite === null && test.nitrate === null && test.ph === null){
-    alert('Add at least one reading before saving.');
-    return;
-  }
-
+  const test = { date: new Date().toISOString(), ammonia: num($('ammonia').value), nitrite: num($('nitrite').value), nitrate: num($('nitrate').value), ph: num($('ph').value) };
+  if(test.ammonia === null && test.nitrite === null && test.nitrate === null && test.ph === null){ $('saveMsg').textContent = 'Add at least one reading first.'; return; }
   state.tests.unshift(test);
-  state.tests = state.tests.slice(0,30);
+  state.tests = state.tests.slice(0, 30);
+  saveState();
+  $('saveMsg').textContent = 'Saved ✓';
   e.target.reset();
-  save(true);
+  render();
+  setTimeout(() => $('saveMsg').textContent = '', 2200);
 });
-
-$('logColonyBtn').addEventListener('click', ()=>{ state.colonyAt = new Date().toISOString(); save(true); });
-$('logParadigmBtn').addEventListener('click', ()=>{ state.paradigmLogs.unshift(new Date().toISOString()); save(true); });
-$('clearTestsBtn').addEventListener('click', ()=>{ if(confirm('Clear all water test history in UX Lab?')){ state.tests=[]; save(true); }});
-$('resetJourneyBtn').addEventListener('click', ()=>{ if(confirm('Reset cycle journey logs in UX Lab?')){ state={...defaultState}; save(true); }});
-document.querySelectorAll('[data-scroll]').forEach(btn=>btn.addEventListener('click',()=>$(btn.dataset.scroll)?.scrollIntoView({behavior:'smooth',block:'start'})));
-
+$('colonyBtn').addEventListener('click', () => { state.colony = new Date().toISOString(); saveState(); render(); });
+$('paradigmBtn').addEventListener('click', () => { state.paradigm = new Date().toISOString(); saveState(); render(); });
+$('resetBtn').addEventListener('click', () => { if(confirm('Reset this UX Lab home data?')){ state = defaultState(); saveState(); render(); } });
+$('clearHistory').addEventListener('click', () => { if(confirm('Clear water test history?')){ state.tests = []; saveState(); render(); } });
+$('scrollToLog').addEventListener('click', () => $('testForm').scrollIntoView({ behavior:'smooth', block:'center' }));
+document.querySelectorAll('.stage-card').forEach(card => card.addEventListener('click', () => card.scrollIntoView({ behavior:'smooth', block:'nearest', inline:'center' })));
 render();
