@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AquoraX UX Lab — Cycle + Tests</title>
+  <title>AquoraX UX Lab — Cycle · Tests · Livestock</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -232,9 +232,83 @@
       </section>
     </section>
 
+
+
+    <section class="view" id="livestockView" data-view="livestock" aria-label="AquoraX livestock tracker">
+      <section class="livestock-hero panel">
+        <div>
+          <p class="eyebrow">AquoraX Livestock</p>
+          <h1>Track coral and fish with calm confidence.</h1>
+          <p>Save each coral or fish, add photos, monitor growth or condition, and keep a simple journal without overwhelming the beginner experience.</p>
+        </div>
+        <button class="btn primary" id="livestockFocusBtn" type="button">Add livestock</button>
+      </section>
+
+      <section class="livestock-entry panel" id="livestockEntry">
+        <form class="livestock-form" id="livestockForm">
+          <div class="form-title livestock-form-head">
+            <div>
+              <p class="eyebrow">Livestock Tracker</p>
+              <h3>Add coral or fish</h3>
+            </div>
+            <span>Beginner safe</span>
+          </div>
+
+          <label>Type
+            <select id="lifeType">
+              <option value="coral">Coral</option>
+              <option value="fish">Fish</option>
+            </select>
+          </label>
+          <label>Name
+            <input id="lifeName" type="text" placeholder="e.g. Torch coral / Clownfish" />
+          </label>
+          <label>Location
+            <input id="lifeLocation" type="text" placeholder="e.g. Left rock / top shelf" />
+          </label>
+          <label>Photo
+            <input id="lifePhoto" type="file" accept="image/*" />
+          </label>
+
+          <div class="slider-wrap">
+            <div>
+              <p class="label" id="lifeSliderLabel">Growth / condition</p>
+              <strong id="lifeScoreText">5 / 10</strong>
+              <small>Use this as a simple visual check, not a perfect measurement.</small>
+            </div>
+            <input id="lifeScore" type="range" min="1" max="10" value="5" />
+          </div>
+
+          <label class="wide-field">Notes / journal
+            <textarea id="lifeNotes" rows="4" placeholder="What changed? Extension, colour, feeding, behaviour, placement, confidence..."></textarea>
+          </label>
+
+          <div class="photo-preview" id="photoPreview">Photo preview appears here</div>
+          <button class="btn primary submit" type="submit">Save livestock</button>
+          <p id="lifeSaveMsg" class="save-msg" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="livestock-dashboard panel">
+        <div class="command-head">
+          <div>
+            <p class="eyebrow">Tracked Livestock</p>
+            <h2>Corals and fish</h2>
+          </div>
+          <div class="filter-pills" role="group" aria-label="Livestock filter">
+            <button class="filter-btn active" data-filter="all" type="button">All</button>
+            <button class="filter-btn" data-filter="coral" type="button">Coral</button>
+            <button class="filter-btn" data-filter="fish" type="button">Fish</button>
+          </div>
+        </div>
+        <div id="livestockGrid" class="livestock-grid"></div>
+      </section>
+    </section>
+
     <nav class="bottom-nav" aria-label="Beginner navigation">
       <button class="nav-btn active" data-target="cycle" type="button">Cycle</button>
       <button class="nav-btn" data-target="tests" type="button">Tests</button>
+      <button class="nav-btn" data-target="livestock" type="button">Livestock</button>
     </nav>
   </main>
 

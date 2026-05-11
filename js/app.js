@@ -342,3 +342,122 @@ function bindBeginnerNav(){
 
 bindBeginnerNav();
 renderReefTests();
+
+// AquoraX Beginner Livestock tracker
+const LIVESTOCK_STORE_KEY = 'aquoraxBeginnerLivestockV1';
+let livestockState = loadLivestockState();
+let livestockFilter = 'all';
+let pendingPhotoData = '';
+
+function loadLivestockState(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(LIVESTOCK_STORE_KEY));
+    return saved && typeof saved === 'object' ? { items: [], ...saved } : { items: [] };
+  } catch { return { items: [] }; }
+}
+function saveLivestockState(){ localStorage.setItem(LIVESTOCK_STORE_KEY, JSON.stringify(livestockState)); }
+function readPhoto(file){
+  return new Promise((resolve) => {
+    if(!file){ resolve(''); return; }
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || ''));
+    reader.onerror = () => resolve('');
+    reader.readAsDataURL(file);
+  });
+}
+function lifeTypeLabel(type){ return type === 'fish' ? 'Fish' : 'Coral'; }
+function lifeScoreLabel(score){
+  const n = Number(score || 5);
+  if(n <= 3) return 'Review';
+  if(n <= 6) return 'Watch';
+  return 'Healthy';
+}
+function renderLivestock(){
+  const grid = $('livestockGrid');
+  if(!grid) return;
+  const items = livestockState.items.filter(item => livestockFilter === 'all' || item.type === livestockFilter);
+  if(!items.length){
+    grid.innerHTML = '<div class="history-empty livestock-empty">No livestock saved yet. Add your first coral or fish to start the timeline.</div>';
+    return;
+  }
+  grid.innerHTML = items.map(item => {
+    const status = lifeScoreLabel(item.score);
+    const tone = status === 'Healthy' ? 'good' : status === 'Watch' ? 'watch' : 'review';
+    const img = item.photo ? `<img src="${item.photo}" alt="${escapeHtml(item.name)} photo" />` : `<div class="life-placeholder">${item.type === 'fish' ? '🐟' : '🪸'}</div>`;
+    return `<article class="life-card ${tone}">
+      <div class="life-image">${img}</div>
+      <div class="life-content">
+        <div class="life-top"><span>${lifeTypeLabel(item.type)}</span><button class="life-delete" data-id="${item.id}" type="button" aria-label="Delete ${escapeHtml(item.name)}">×</button></div>
+        <h3>${escapeHtml(item.name)}</h3>
+        <p class="life-location">${escapeHtml(item.location || 'Location not set')}</p>
+        <div class="life-meter"><span style="width:${Number(item.score) * 10}%"></span></div>
+        <div class="life-status"><strong>${status}</strong><small>${Number(item.score)}/10 growth / condition</small></div>
+        <p class="life-note">${escapeHtml(item.notes || 'No notes yet.')}</p>
+        <small class="life-date">Saved ${formatDate(item.date)}</small>
+      </div>
+    </article>`;
+  }).join('');
+  grid.querySelectorAll('.life-delete').forEach(btn => btn.addEventListener('click', () => {
+    if(!confirm('Remove this livestock entry?')) return;
+    livestockState.items = livestockState.items.filter(item => item.id !== btn.dataset.id);
+    saveLivestockState();
+    renderLivestock();
+  }));
+}
+function escapeHtml(value){
+  return String(value ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+}
+function bindLivestock(){
+  const focus = $('livestockFocusBtn');
+  if(focus) focus.addEventListener('click', () => $('livestockEntry').scrollIntoView({ behavior:'smooth', block:'start' }));
+  const score = $('lifeScore');
+  if(score) score.addEventListener('input', () => { $('lifeScoreText').textContent = `${score.value} / 10`; });
+  const type = $('lifeType');
+  if(type) type.addEventListener('change', () => { $('lifeSliderLabel').textContent = type.value === 'fish' ? 'Condition / confidence' : 'Growth / condition'; });
+  const photo = $('lifePhoto');
+  if(photo) photo.addEventListener('change', async () => {
+    pendingPhotoData = await readPhoto(photo.files && photo.files[0]);
+    const preview = $('photoPreview');
+    if(pendingPhotoData) preview.innerHTML = `<img src="${pendingPhotoData}" alt="Selected livestock preview" />`;
+    else preview.textContent = 'Photo preview appears here';
+  });
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.addEventListener('click', () => {
+    livestockFilter = btn.dataset.filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderLivestock();
+  }));
+  const form = $('livestockForm');
+  if(form){
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('lifeName').value.trim();
+      if(!name){ $('lifeSaveMsg').textContent = 'Add a name first.'; return; }
+      if(!pendingPhotoData && $('lifePhoto').files && $('lifePhoto').files[0]) pendingPhotoData = await readPhoto($('lifePhoto').files[0]);
+      const item = {
+        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+        date: new Date().toISOString(),
+        type: $('lifeType').value,
+        name,
+        location: $('lifeLocation').value.trim(),
+        score: Number($('lifeScore').value || 5),
+        notes: $('lifeNotes').value.trim(),
+        photo: pendingPhotoData
+      };
+      livestockState.items.unshift(item);
+      livestockState.items = livestockState.items.slice(0, 60);
+      saveLivestockState();
+      form.reset();
+      pendingPhotoData = '';
+      $('lifeScore').value = 5;
+      $('lifeScoreText').textContent = '5 / 10';
+      $('lifeSliderLabel').textContent = 'Growth / condition';
+      $('photoPreview').textContent = 'Photo preview appears here';
+      $('lifeSaveMsg').textContent = 'Livestock saved ✓';
+      renderLivestock();
+      setTimeout(() => $('lifeSaveMsg').textContent = '', 2400);
+    });
+  }
+}
+
+bindLivestock();
+renderLivestock();
